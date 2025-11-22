@@ -1,0 +1,111 @@
+﻿using Unity.Burst;
+using Unity.Collections;
+using Unity.Jobs;
+using Unity.Mathematics;
+
+/// Copyright 2023 Procedural Worlds Ltd
+/// Written by Jonathan Williams as part of Storm
+
+namespace ProceduralWorlds.Storm.Utils
+{
+    /// <summary>
+    /// Reads values from Input and copys any data within area to Output array applying a mask
+    /// </summary>
+    [BurstCompile]
+#if UNITY_2022_2_OR_NEWER
+    [GenerateTestsForBurstCompatibility(CompileTarget = GenerateTestsForBurstCompatibilityAttribute.BurstCompatibleCompileTarget.PlayerAndEditor)]
+#else
+    [BurstCompatible(CompileTarget = BurstCompatibleAttribute.BurstCompatibleCompileTarget.PlayerAndEditor)]
+#endif
+    public struct DataCopyJob : IJobParallelFor
+    {
+        /// <summary>
+        /// Position of Input map in world space
+        /// </summary>
+        [ReadOnly]
+        public float2 InputPosition;
+        /// <summary>
+        /// Size of Input map in world space
+        /// </summary>
+        [ReadOnly]
+        public float2 InputSize;
+        /// <summary>
+        /// Number of samples along each axis in Input map
+        /// </summary>
+        [ReadOnly]
+        public int2 InputResolution;
+        /// <summary>
+        /// Input map as 2D float array packed as [Y * resolution + x]
+        /// </summary>
+        [ReadOnly]
+        public NativeArray<float> Input;
+        /// <summary>
+        /// Value Range to adjust input values to fit (Input 0-1 = InputRange X-Y)
+        /// </summary>
+        [ReadOnly]
+        public float2 InputRange;
+        /// <summary>
+        /// Is Input a X,Y,Z array needing to be split out to Z layer?
+        /// </summary>
+        [ReadOnly]
+        public bool NeedsSplit;
+        /// <summary>
+        /// Index of Z layer to use
+        /// </summary>
+        public int SplitIndex;
+        /// <summary>
+        /// Number of layers
+        /// </summary>
+        public int SplitLayers;
+
+        /// <summary>
+        /// Position of Output map in world space
+        /// </summary>
+        [ReadOnly]
+        public float2 OutputPosition;
+        /// <summary>
+        /// Size of Output map in world space
+        /// </summary>
+        [ReadOnly]
+        public float2 OutputSize;
+        /// <summary>
+        /// Number of samples along each axis on Output map
+        /// </summary>
+        [ReadOnly]
+        public int2 OutputResolution;
+
+        /// <summary>
+        /// Output array
+        /// </summary>
+        public NativeArray<float> Output;
+
+        /// <summary>
+        /// Offset to apply to Sampled data prior to scaling
+        /// </summary>
+        [ReadOnly]
+        public float DataOffset;
+        /// <summary>
+        /// Scale applied to Sampled data
+        /// </summary>
+        [ReadOnly]
+        public float DataScale;
+        [ReadOnly]
+        public float2 PixelOffset;
+
+        public void Execute(int index)
+        {
+            float2 outputUV = math.float2(index % OutputResolution.x, index / OutputResolution.x) / (OutputResolution);
+            //position on Input array to sample (Convert output UV to world space, then back into UV space for Input)
+            float2 inputUV = ((OutputPosition - InputPosition) + (OutputSize * outputUV)) / InputSize;
+            float val;
+            if (NeedsSplit)
+                val = DataOffset + (math.lerp(InputRange.x, InputRange.y, StormJobUtils.Sample(ref Input, ref InputResolution, ref inputUV, ref PixelOffset, SplitIndex, SplitLayers)) * DataScale);
+            else
+                val = DataOffset + (math.lerp(InputRange.x, InputRange.y, StormJobUtils.Sample(ref Input, ref InputResolution, ref inputUV, ref PixelOffset)) * DataScale);
+            if (DataScale < 0)
+                Output[index] = math.min(Output[index], val);
+            else
+                Output[index] = math.max(Output[index], val);
+        }
+    }
+}

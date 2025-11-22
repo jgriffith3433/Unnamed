@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: bf56e7bc152ad034ca2452bd89189eff
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 217085
+  packageName: Deep Desert - Micro Biome
+  packageVersion: 1.0.1
+  assetPath: Assets/Procedural Worlds/Content Packs/Deep Desert/Demo/Materials/PW_M_Default_HDRP_Terrain.mat
+  uploadId: 497660

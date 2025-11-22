@@ -1,0 +1,161 @@
+#pragma kernel CSMain
+
+#define MAXARRAYELEMENTS 16
+
+RWTexture2DArray<float4> pageTable;
+Texture2D<float4> physicalTextureHeight;
+
+//Storm Terrain data
+float4 _StormVT_PageTableArrayData;
+float4 _StormVT_TerrainHeightScale;
+float4 _StormVT_TotalTerrainBounds;
+float4 _StormVT_WorldOffset;
+
+//UV Translation data
+const float4 _StormVT_PageFracScale;
+const float4 _StormVT_TexScale;
+const float4 _StormVT_TexBias;
+
+struct PageTableData
+{
+    float2 centerPos;
+    float worldScale;
+};
+StructuredBuffer<PageTableData> _PageTableDataBuffer;
+uint pageTableTexelSize;
+uint2 physicalTextureDimensions;
+
+float3 position;
+RWStructuredBuffer<float> _Result;
+
+//Functions
+float GetTotalTerrainBoundsMask(float3 position)
+{
+    float2 uv = (position.xz - _StormVT_TotalTerrainBounds.xy) / _StormVT_TotalTerrainBounds.zw + 0.5;
+    
+    float mask = 1.0;
+    if (uv.x >= 1.0 || uv.x <= 0.0 || uv.y >= 1.0 || uv.y <= 0.0)
+    {
+        mask = 0.0;
+    }
+    return mask;
+}
+
+void PageTableUVs(float3 position, out float2 UVs, out float2 volumeUVs, out float ringIndex, out float volumeMask)
+{
+    const int lastIndex = (int) (min(_StormVT_PageTableArrayData.w, MAXARRAYELEMENTS) - 1);
+    volumeUVs = (position.xz - _PageTableDataBuffer[lastIndex].centerPos) / _PageTableDataBuffer[lastIndex].worldScale + 0.5;
+
+    //Create volume mask
+    volumeMask = 1;
+    if (volumeUVs.x >= 1 || volumeUVs.x <= 0 || volumeUVs.y >= 1 || volumeUVs.y <= 0)
+    {
+        volumeMask = 0;
+    }
+    
+    //Create bounds mask (where terrains are)
+    //float terrainBoundsMask = GetTotalTerrainBoundsMask(position);
+    //volumeMask *= terrainBoundsMask;
+    
+    //Setup initial variables
+    ringIndex = 0;
+    UVs = float2(0, 0);
+
+
+    //i goes from 0 to num page tables
+        //num page tables - min page table to render
+    const int numLoops = (int) min(_StormVT_PageTableArrayData.w - _StormVT_PageTableArrayData.x, MAXARRAYELEMENTS);
+    for (int i = 0; i < numLoops; i++)
+    {
+        //index goes from highest page index to 0
+        const int index = (int) ((_StormVT_PageTableArrayData.w - 1) - i);
+        float2 newUV = float2(0, 0);
+        newUV = (position.xz - _PageTableDataBuffer[index].centerPos) / _PageTableDataBuffer[index].worldScale + 0.5;
+
+        float mask = 1;
+        if (newUV.x >= 1 || newUV.x <= 0 || newUV.y >= 1 || newUV.y <= 0)
+        {
+            mask = 0;
+        }
+        UVs = lerp(UVs, newUV, mask);
+        ringIndex = lerp(ringIndex, index, mask);
+    }
+
+
+    volumeUVs *= volumeMask;
+    ringIndex *= volumeMask;
+    UVs *= volumeMask;
+}
+
+void VirtualTextureUVs_float(float3 position, float2 uv, float2 volumeUVs, float Index, float Lod, float volumeMask, out float3 physicalTextureCoords)
+{
+
+    float4 physPage = pageTable[uint3(uv * pageTableTexelSize, Index)] * _StormVT_TexScale + _StormVT_TexBias;
+    
+    float nodeScale = (1 << (int) physPage.z) * 0.0625f;
+    
+    float2 pageFrac = frac(position.xz / nodeScale);
+    
+    physicalTextureCoords = float3(pageFrac * _StormVT_PageFracScale.xy + physPage.xy, ((physPage.z == 0) ? 0 : 1) * volumeMask);
+
+   
+}
+
+float4 BilinearSample(Texture2D tex, float2 uv, float2 texSize)
+{
+    float2 uvScaled = uv * texSize - 0.5;
+
+    uint2 uvMin = uint2(floor(uvScaled));
+    uint2 uvMax = uvMin + 1;
+
+    float2 frac = uvScaled - float2(uvMin);
+    
+    if (uvMax.x >= physicalTextureDimensions.x)
+    {
+        uvMax.x = physicalTextureDimensions.x - 1;
+    }
+    if (uvMax.y >= physicalTextureDimensions.y)
+    {
+        uvMax.y = physicalTextureDimensions.y - 1;
+    }
+    
+    if (uvMin.x < 0)
+    {
+        uvMin.x = 0;
+    }
+    if (uvMin.y < 0)
+    {
+        uvMin.y = 0;
+    }
+    
+
+    float4 col00 = tex[int2(uvMin.x, uvMin.y)];
+    float4 col10 = tex[int2(uvMax.x, uvMin.y)];
+    float4 col01 = tex[int2(uvMin.x, uvMax.y)];
+    float4 col11 = tex[int2(uvMax.x, uvMax.y)];
+
+    float4 col0 = lerp(col00, col10, frac.x);
+    float4 col1 = lerp(col01, col11, frac.x);
+
+    return lerp(col0, col1, frac.y);
+}
+
+[numthreads(1,1,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    
+    float2 pageUVs;
+    float ringIndex;
+    float volumeMask;
+    float2 volumeUVs;
+    
+    PageTableUVs(position, pageUVs, volumeUVs, ringIndex, volumeMask);
+
+    float3 physicalTextureCoords;
+
+    VirtualTextureUVs_float(position, pageUVs, volumeUVs, ringIndex, 0, volumeMask, physicalTextureCoords);
+
+    //_Result[0] = (physicalTextureHeight[uint2(physicalTextureCoords.xy * physicalTextureDimensions.xy)].r * _StormVT_TerrainHeightScale.x) + _StormVT_TerrainHeightScale.y;
+    _Result[0] = (BilinearSample(physicalTextureHeight, physicalTextureCoords.xy, physicalTextureDimensions.xy).r * _StormVT_TerrainHeightScale.x) + _StormVT_TerrainHeightScale.y;
+
+}

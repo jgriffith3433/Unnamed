@@ -1,0 +1,77 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+RWTexture2D<float4> _ReadbackTexture;
+RWTexture2D<float4> _TerrainIDTexture;
+
+RWStructuredBuffer<float4> _AppendBuffer;
+uint2 _TextureSize;
+
+uint size;
+uint width;
+uint height;
+
+float2 _TerrainBottomLeftPos;
+
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    // Get pixel coordinates
+    uint2 pixelCoord = id.xy;
+
+    // Ensure the thread is within the texture bounds
+    if (pixelCoord.x >= _TextureSize.x || pixelCoord.y >= _TextureSize.y)
+        return;
+    
+    uint bufferID = id.y * width + id.x;
+    
+    if(bufferID >= size)
+        return;
+    
+    // Sample the texture
+    float4 pixelData = _ReadbackTexture[id.xy] * 256.0f;
+
+    // Calcuate terrain position for tile positions lower than zoom level 8
+    float2 terrainPos = (round(_TerrainIDTexture[id.xy].xy * 255.0f) * 16.0f) + _TerrainBottomLeftPos;
+    
+    //Zoom level is stored in the blue channel
+    int zoomLevel = (pixelData.z - 1);
+    
+    // Calculate the node scale (lowest zoom size is 1 meter / 16 tiles = 0.0625)
+    float nodeScale = (float) ((int) (1 << (int) (zoomLevel)) * 0.0625f);
+    
+    // Remap tile positions (0 - 255) into their local space
+    float2 nodeLocalPos = pixelData.xy * nodeScale;
+    
+    // World position changes if we are lower than mip 8
+    float2 worldPos;
+    
+    if(zoomLevel < 8)
+    {
+        // Add the 16m terrain ID position onto the local node pos for tiles lower than mip 8
+        worldPos = nodeLocalPos + terrainPos;
+    }
+    else
+    {
+        // Just add the bottom left terrain position for tiles above 8, as no position remapping needs to occur
+        worldPos = nodeLocalPos + _TerrainBottomLeftPos;
+    }
+    
+    
+    int2 zoomTileCoordinate = int2(floor(worldPos.x / nodeScale), floor(worldPos.y / nodeScale));
+    
+    // Validation check for if we can store this data
+    if (_TerrainIDTexture[id.xy].a > 0 && pixelData.z > 0 && zoomLevel < 23)
+    {
+        // Add pixel data to the append buffer
+        _AppendBuffer[bufferID] = float4(zoomTileCoordinate.x, zoomTileCoordinate.y, zoomLevel, nodeScale);
+    }
+    else
+    {
+        // Add null data to the append buffer
+        _AppendBuffer[bufferID] = float4(-1,-1,-1,-1);
+    }
+
+}

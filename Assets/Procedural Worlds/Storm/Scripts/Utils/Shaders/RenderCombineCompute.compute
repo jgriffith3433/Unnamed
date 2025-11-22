@@ -1,0 +1,314 @@
+#pragma kernel CombineStandard
+#pragma kernel CombineFullyVisible
+#pragma kernel CombineShadowsOnly ShadowOnly
+
+// Structures
+struct StormItemData
+{
+    float3 Position;
+    float4 Rotation;
+    float3 Scale;
+    float2 ExtraData;
+};
+struct InputData {
+    float3 Offset;
+    float3 Size;
+};
+struct SettingsData {
+    float ShadowDistance;
+    int SplitShadows;
+    float3 ItemBoundsCenter;
+    float3 ItemBoundsExtents;
+    float4 LODRanges;
+    float MaxRange;
+    float DensityFadeStart;
+    float DensityFadeStrength;
+    float DensityFadeScaleoutRange;
+    float ScaleoutRange;
+    float ScaleoutMinScale;
+    float LODFade;
+    float LODMix;
+    float LODBias;
+};
+
+// Buffers
+#if !ShadowOnly
+RWStructuredBuffer<StormItemData> OutputLOD0;
+RWStructuredBuffer<StormItemData> OutputLOD1;
+RWStructuredBuffer<StormItemData> OutputLOD2;
+RWStructuredBuffer<StormItemData> OutputLOD3;
+RWStructuredBuffer<StormItemData> OutputLOD4;
+#endif
+RWStructuredBuffer<StormItemData> OutputShadows;
+RWStructuredBuffer<uint> OutputCounts;
+
+StructuredBuffer<SettingsData> SettingsValues;
+StructuredBuffer<StormItemData> InputItems;
+StructuredBuffer<InputData> InputValues;
+
+uint InputCount;
+float3 Position;
+float3 LightDir;
+float4 FrustumPlane0;
+float4 FrustumPlane1;
+float4 FrustumPlane2;
+float4 FrustumPlane3;
+float4 FrustumPlane4;
+float4 FrustumPlane5;
+
+void GetShadowBounds(inout float3 ItemBoundsCenter, inout float3 ItemBoundsExtents)
+{
+    float distance = length(ItemBoundsExtents) * 10 * (1 - dot(LightDir, float3(0, -1, 0)));
+
+    // Only expand in the direction we're turning
+    float3 bMax = ItemBoundsExtents + (max(float3(0, 0, 0), LightDir) * distance);
+    float3 bMin = -ItemBoundsExtents + (min(float3(0, 0, 0), LightDir) * distance);
+
+    ItemBoundsExtents = (bMax - bMin) * 0.5;
+    ItemBoundsCenter += bMin + ItemBoundsExtents;
+}
+
+bool CheckEdgeIntersection(float d1, float d2)
+{
+    // Consider points on the plane (distance = 0) as visible
+    return d1 >= 0 || d2 >= 0 || (sign(d1) != sign(d2));
+}
+bool TestAgainstPlane(float4 plane,
+    float3 c000, float3 c100, float3 c010, float3 c110,
+    float3 c001, float3 c101, float3 c011, float3 c111)
+{
+
+    // Test all corners against this plane - unrolled for better performance
+    float d000 = dot(plane.xyz, c000) + plane.w;
+    float d100 = dot(plane.xyz, c100) + plane.w;
+    float d010 = dot(plane.xyz, c010) + plane.w;
+    float d110 = dot(plane.xyz, c110) + plane.w;
+    float d001 = dot(plane.xyz, c001) + plane.w;
+    float d101 = dot(plane.xyz, c101) + plane.w;
+    float d011 = dot(plane.xyz, c011) + plane.w;
+    float d111 = dot(plane.xyz, c111) + plane.w;
+
+    if (d000 >= 0 ||
+        d100 >= 0 ||
+        d010 >= 0 ||
+        d110 >= 0 ||
+        d001 >= 0 ||
+        d101 >= 0 ||
+        d011 >= 0 ||
+        d111 >= 0) return true;
+
+    // Check all 12 edges for intersection - unrolled for better performance
+    // Edges along X axis
+    if (CheckEdgeIntersection(d000, d100)) return true;
+    if (CheckEdgeIntersection(d010, d110)) return true;
+    if (CheckEdgeIntersection(d001, d101)) return true;
+    if (CheckEdgeIntersection(d011, d111)) return true;
+
+    // Edges along Y axis
+    if (CheckEdgeIntersection(d000, d010)) return true;
+    if (CheckEdgeIntersection(d100, d110)) return true;
+    if (CheckEdgeIntersection(d001, d011)) return true;
+    if (CheckEdgeIntersection(d101, d111)) return true;
+
+    // Edges along Z axis
+    if (CheckEdgeIntersection(d000, d001)) return true;
+    if (CheckEdgeIntersection(d100, d101)) return true;
+    if (CheckEdgeIntersection(d010, d011)) return true;
+    if (CheckEdgeIntersection(d110, d111)) return true;
+
+    return false;
+}
+
+bool IsInFrustum(float3 center, float3 extents, float distance)
+{
+    // Pre-calculate all 8 corners of the AABB using local variables for better vectorization
+    float3 c000 = center + float3(-extents.x, -extents.y, -extents.z);
+    float3 c100 = center + float3(extents.x, -extents.y, -extents.z);
+    float3 c010 = center + float3(-extents.x, extents.y, -extents.z);
+    float3 c110 = center + float3(extents.x, extents.y, -extents.z);
+    float3 c001 = center + float3(-extents.x, -extents.y, extents.z);
+    float3 c101 = center + float3(extents.x, -extents.y, extents.z);
+    float3 c011 = center + float3(-extents.x, extents.y, extents.z);
+    float3 c111 = center + float3(extents.x, extents.y, extents.z);
+
+    // Test against each frustum plane
+    if (!TestAgainstPlane(FrustumPlane0,
+        c000, c100, c010, c110, c001, c101, c011, c111)) return false;
+
+    if (!TestAgainstPlane(FrustumPlane1,
+        c000, c100, c010, c110, c001, c101, c011, c111)) return false;
+
+    if (!TestAgainstPlane(FrustumPlane2,
+        c000, c100, c010, c110, c001, c101, c011, c111)) return false;
+
+    if (!TestAgainstPlane(FrustumPlane3,
+        c000, c100, c010, c110, c001, c101, c011, c111)) return false;
+
+    if (!TestAgainstPlane(FrustumPlane4,
+        c000, c100, c010, c110, c001, c101, c011, c111)) return false;
+
+    if (!TestAgainstPlane(FrustumPlane5,
+        c000, c100, c010, c110, c001, c101, c011, c111)) return false;
+
+    return true;
+}
+float invLerp(float from, float to, float value) {
+    return (value - from) / (to - from);
+}
+bool DistUpdates(SettingsData sData, float distNorm, inout StormItemData item)
+{
+    bool ret = true;
+    //remove items based on "Extra Data.y" value vs Range
+    if (sData.DensityFadeStrength > 0 && item.ExtraData.y > 0 && sData.DensityFadeStart < 1)
+    {
+        //get our normalized distance minus FadeStart value so 0-1 from FadeStart to MaxLODRange. <0 = before FadeStart
+        float densityFade = invLerp(sData.DensityFadeStart, 1, distNorm) - pow(abs(item.ExtraData.y), sData.DensityFadeStrength);
+        if (densityFade > 0)
+        {
+            //if our new range is >= our fade range, just cull it or if our new range is above the begin fade (0) and FadeRange, scale it
+            ret = densityFade > 0 && densityFade < sData.DensityFadeScaleoutRange;
+            if (ret)
+            {
+                //scale item by a normalized value from 0 to FadeRange as (0-1)
+                item.Scale *= 1 - (densityFade / sData.DensityFadeScaleoutRange);
+            }
+            else
+                return ret;
+        }
+    }
+    if (1 - distNorm < sData.ScaleoutRange)
+    {
+        float fade = (1 - distNorm) / sData.ScaleoutRange;
+        ret = fade > 0;
+        item.Scale *= lerp(sData.ScaleoutMinScale, 1, fade);
+    }
+    return ret;
+}
+
+#if !ShadowOnly
+void AddToLOD(SettingsData sData, StormItemData item, float dist)
+{
+    item.ExtraData.y = 0;
+    int index;
+    if (dist <= sData.LODRanges.x)
+    {
+        InterlockedAdd(OutputCounts[0], 1, index);
+        OutputLOD0[index] = item;
+        return;
+    }
+    if (dist > sData.LODRanges.x && dist <= sData.LODRanges.y)
+    {
+        InterlockedAdd(OutputCounts[1], 1, index);
+        OutputLOD1[index] = item;
+        return;
+    }
+    if (dist > sData.LODRanges.y && dist <= sData.LODRanges.z)
+    {
+        InterlockedAdd(OutputCounts[2], 1, index);
+        OutputLOD2[index] = item;
+        return;
+    }
+    if (dist > sData.LODRanges.z && dist <= sData.LODRanges.w)
+    {
+        InterlockedAdd(OutputCounts[3], 1, index);
+        OutputLOD3[index] = item;
+        return;
+    }
+    if (dist > sData.LODRanges.w)
+    {
+        InterlockedAdd(OutputCounts[4], 1, index);
+        OutputLOD4[index] = item;
+        return;
+    }
+}
+#endif
+void AddToShadows(StormItemData item)
+{
+    item.ExtraData.y = 0;
+    int index;
+    InterlockedAdd(OutputCounts[5], 1, index);
+    OutputShadows[index] = item;
+}
+
+#if !ShadowOnly
+[numthreads(64,1,1)]
+void CombineStandard(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= InputCount)
+        return;
+
+    StormItemData item = InputItems.Load(id.x);
+    InputData iData = InputValues.Load(0);
+    SettingsData sData = SettingsValues.Load(0);
+    item.Position.xz *= iData.Size.xz;
+    item.Position += iData.Offset;
+
+    float3 itemCenter = item.Position + sData.ItemBoundsCenter;
+    float3 itemExtents = sData.ItemBoundsExtents * item.Scale;
+
+    float dist = length(clamp(Position, itemCenter - itemExtents, itemCenter + itemExtents) - Position);
+    float distNorm = dist / max(0.1, sData.MaxRange);
+    bool visible = IsInFrustum(itemCenter, itemExtents, dist);
+    if (visible && DistUpdates(sData, distNorm, item))
+    {
+        float d = clamp(pow(abs(distNorm), sData.LODBias) + (sData.LODMix * (2 * (item.ExtraData.y - 0.5))), 0, 1);
+        AddToLOD(sData, item, d);
+    }
+    if ((!visible || sData.SplitShadows == 1) && any(LightDir) && dist < sData.ShadowDistance)
+    {
+        GetShadowBounds(itemCenter, itemExtents);
+        visible = IsInFrustum(itemCenter, itemExtents, dist);
+        if (visible && DistUpdates(sData, distNorm, item))
+            AddToShadows(item);
+    }
+}
+[numthreads(64,1,1)]
+void CombineFullyVisible(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= InputCount)
+        return;
+
+    StormItemData item = InputItems.Load(id.x);
+    InputData iData = InputValues.Load(0);
+    SettingsData sData = SettingsValues.Load(0);
+    item.Position.xz *= iData.Size.xz;
+    item.Position += iData.Offset;
+
+    float3 itemCenter = item.Position + sData.ItemBoundsCenter;
+    float3 itemExtents = sData.ItemBoundsExtents * item.Scale;
+
+    float dist = length(clamp(Position, itemCenter - itemExtents, itemCenter + itemExtents) - Position) / max(0.1, sData.MaxRange);
+
+    // Add to appropriate LOD buffer
+    if (DistUpdates(sData, dist, item))
+    {
+        dist = clamp(pow(abs(dist), sData.LODBias) + (sData.LODMix * (2 * (item.ExtraData.y - 0.5))), 0, 1);
+        AddToLOD(sData, item, dist);
+        // Handle shadows if needed
+        if (sData.SplitShadows == 1)
+            AddToShadows(item);
+    }
+}
+#endif
+[numthreads(64,1,1)]
+void CombineShadowsOnly(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= InputCount)
+        return;
+
+    StormItemData item = InputItems.Load(id.x);
+    InputData iData = InputValues.Load(0);
+    SettingsData sData = SettingsValues.Load(0);
+    item.Position.xz *= iData.Size.xz;
+    item.Position += iData.Offset;
+
+    float3 itemCenter = item.Position + sData.ItemBoundsCenter;
+    float3 itemExtents = sData.ItemBoundsExtents * item.Scale;
+
+    float dist = length(clamp(Position, itemCenter - itemExtents, itemCenter + itemExtents) - Position) / sData.MaxRange;
+
+    GetShadowBounds(itemCenter, itemExtents);
+    bool visible = IsInFrustum(itemCenter, itemExtents, dist);
+    if (visible && DistUpdates(sData, dist, item))
+        AddToShadows(item);
+}

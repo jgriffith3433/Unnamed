@@ -1,0 +1,49 @@
+Portions of this software were created under usage of additional resources provided by Unity and other sources. 
+This file lists all the content obtained from 3rd party sources and the license under which those files were 
+included in this application. You may find additional license information in the named folders.
+
+The files found in the following folders are governed by additional licenses:
+
+__________________________________________________________________________________________________________________
+Asynchronous Image Loader
+------------------------------------------------------------------------------------------------------------------
+Folder:
+Assets\Procedural Worlds\Storm\Plugins\Asynchronous Image Loader
+------------------------------------------------------------------------------------------------------------------
+Derived from the project "Unity Asynchronous Image Loader", obtainable from: https://github.com/Looooong/UnityAsyncImageLoader
+License: MIT License, see Assets\Procedural Worlds\Storm\Plugins\Asynchronous Image Loader\LICENSE.txt
+__________________________________________________________________________________________________________________
+
+
+__________________________________________________________________________________________________________________
+Delaunay Triangulation
+------------------------------------------------------------------------------------------------------------------
+Folder: 
+Assets\Procedural Worlds\Storm\Plugins\Delaunay Triangulation
+------------------------------------------------------------------------------------------------------------------
+Derived from the project "ConstrainedDelaunayTriangulation" obtainable from: https://github.com/QThund/ConstrainedDelaunayTriangulation
+License: MIT License, see Assets\Procedural Worlds\Storm\Plugins\Delaunay Triangulation\LICENSE.txt
+__________________________________________________________________________________________________________________
+
+
+__________________________________________________________________________________________________________________
+Big Gustave
+------------------------------------------------------------------------------------------------------------------
+File: 
+Assets\Procedural Worlds\Storm\Plugins\Geospatial\BigGustave.DLL
+------------------------------------------------------------------------------------------------------------------
+Derived from the project "Big Gustave", obtainable from https://github.com/EliotJones/BigGustave
+License: Public Domain / Unlicense License - https://github.com/EliotJones/BigGustave?tab=Unlicense-1-ov-file#readme
+__________________________________________________________________________________________________________________
+
+
+__________________________________________________________________________________________________________________
+MIConvexHull
+------------------------------------------------------------------------------------------------------------------
+Folder: 
+Assets\Procedural Worlds\Storm\Plugins\MIConvexHull.NET Standard
+------------------------------------------------------------------------------------------------------------------
+Derived from the project "MiConvexHull", obtainable from https://github.com/DesignEngrLab/MIConvexHull
+License: MIT - Assets\Procedural Worlds\Storm\Plugins\MIConvexHull.NET Standard\LICENSE.txt
+__________________________________________________________________________________________________________________
+

@@ -1,0 +1,18 @@
+{
+    "name": "ProceduralWorlds.Storm.DungeonGen.Data",
+    "rootNamespace": "",
+    "references": [
+        "ProceduralWorlds.Storm.BuildingGen.Core",
+        "ProceduralWorlds.Storm.BuildingGen.Data",
+        "ProceduralWorlds.Storm.StructureCore"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

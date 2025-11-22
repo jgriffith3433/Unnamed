@@ -1,0 +1,12 @@
+#pragma kernel RenderCount
+
+RWStructuredBuffer<int> Input;
+uint InputCount;
+
+[numthreads(32,1,1)]
+void RenderCount(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= InputCount)
+        return;
+    Input[id.x] = 0;
+}

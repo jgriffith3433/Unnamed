@@ -1,0 +1,18 @@
+{
+    "name": "ProceduralWorlds.Storm.BuildingGen.Data",
+    "rootNamespace": "",
+    "references": [
+        "ProceduralWorlds.Storm.StructureCore",
+        "ProceduralWorlds.Storm.AreaPopulator.Core",
+        "ProceduralWorlds.Storm.AreaPopulator.Data"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

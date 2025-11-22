@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 68b6edf1a4132704aa35c960cd442cd0
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 217085
+  packageName: Deep Desert - Micro Biome
+  packageVersion: 1.0.1
+  assetPath: Assets/Procedural Worlds/Content Packs/Deep Desert/GeNa/Spawners/Rocks/Spawner
+    - Detailed Pebbles.prefab
+  uploadId: 497660

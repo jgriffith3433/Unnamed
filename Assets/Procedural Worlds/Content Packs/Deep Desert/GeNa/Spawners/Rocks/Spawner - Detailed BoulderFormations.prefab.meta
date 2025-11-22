@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 94af9122543522b41b57f0225f3cd554
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 217085
+  packageName: Deep Desert - Micro Biome
+  packageVersion: 1.0.1
+  assetPath: Assets/Procedural Worlds/Content Packs/Deep Desert/GeNa/Spawners/Rocks/Spawner
+    - Detailed BoulderFormations.prefab
+  uploadId: 497660

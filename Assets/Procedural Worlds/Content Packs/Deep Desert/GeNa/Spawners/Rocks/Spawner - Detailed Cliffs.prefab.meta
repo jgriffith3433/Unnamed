@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5fc2053707d3246419df7d00618bc604
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 217085
+  packageName: Deep Desert - Micro Biome
+  packageVersion: 1.0.1
+  assetPath: Assets/Procedural Worlds/Content Packs/Deep Desert/GeNa/Spawners/Rocks/Spawner
+    - Detailed Cliffs.prefab
+  uploadId: 497660

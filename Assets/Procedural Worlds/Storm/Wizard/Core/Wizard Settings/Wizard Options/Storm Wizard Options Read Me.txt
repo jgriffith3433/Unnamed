@@ -1,0 +1,1 @@
+Don't delete this read me file as it is used to find where this folder is when using the storm wizard. Deleting this will lead to storm wizard loading errors.

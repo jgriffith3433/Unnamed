@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0da3163aae3ba65479c2627bec7b7175
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 217085
+  packageName: Deep Desert - Micro Biome
+  packageVersion: 1.0.1
+  assetPath: Assets/Procedural Worlds/Content Packs/Deep Desert/GeNa/Spawners/Plants/Spawner
+    - Shrubs.prefab
+  uploadId: 497660

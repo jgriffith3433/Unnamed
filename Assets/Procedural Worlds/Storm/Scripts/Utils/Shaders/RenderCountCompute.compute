@@ -1,0 +1,13 @@
+#pragma kernel RenderCount
+
+RWStructuredBuffer<int> Input;
+RWStructuredBuffer<uint> Output;
+uint InputCount;
+
+[numthreads(32,1,1)]
+void RenderCount(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= InputCount)
+        return;
+    Output[id.x * 3] = max(ceil(Input[id.x] / 64.0), 0);
+}

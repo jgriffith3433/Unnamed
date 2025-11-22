@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 66a869b8766edf3478ef2a851e4dbde6
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 8574412962073106934
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 217085
+  packageName: Deep Desert - Micro Biome
+  packageVersion: 1.0.1
+  assetPath: Assets/Procedural Worlds/Content Packs/Deep Desert/Content Resources/Terrain
+    Layers/PW_L_StylisedSandRocks.terrainlayer
+  uploadId: 497660

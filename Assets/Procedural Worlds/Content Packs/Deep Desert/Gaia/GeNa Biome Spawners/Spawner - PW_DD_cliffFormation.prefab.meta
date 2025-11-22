@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 02432ed5be8e924408abff1c1cde0a83
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 217085
+  packageName: Deep Desert - Micro Biome
+  packageVersion: 1.0.1
+  assetPath: Assets/Procedural Worlds/Content Packs/Deep Desert/Gaia/GeNa Biome Spawners/Spawner
+    - PW_DD_cliffFormation.prefab
+  uploadId: 497660

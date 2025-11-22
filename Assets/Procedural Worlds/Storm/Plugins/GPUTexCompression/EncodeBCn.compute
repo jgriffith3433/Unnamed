@@ -1,0 +1,78 @@
+#pragma kernel EncodeBC1_XDK USE_XDK_CODE TARGET_UINT2
+#pragma kernel EncodeBC3_XDK USE_XDK_CODE TARGET_UINT4
+
+Texture2D _Source;
+#ifdef TARGET_UINT2
+RWTexture2D<uint2> _Target;
+#else
+RWTexture2D<uint4> _Target;
+#endif
+float _Quality;
+int _Lod;
+
+void LoadTexelBlockRGB(Texture2D tex, uint2 tid, out float3 rgb[16])
+{
+    uint2 coord = tid.xy << 2;
+    for (uint i = 0; i < 16; ++i)
+    {
+        uint2 offs = uint2(i & 3, i >> 2);
+        float4 pix = tex.Load(uint3(coord + offs, _Lod));
+        rgb[i] = pix.rgb;
+    }
+}
+
+void LoadTexelBlockRGBA(Texture2D tex, uint2 tid, out float3 rgb[16], out float alpha[16])
+{
+    uint2 coord = tid.xy << 2;
+    for (uint i = 0; i < 16; ++i)
+    {
+        uint2 offs = uint2(i & 3, i >> 2);
+        float4 pix = tex.Load(uint3(coord + offs, _Lod));
+        rgb[i] = pix.rgb;
+        alpha[i] = pix.a;
+    }
+}
+
+
+#if defined(USE_XDK_CODE)
+
+half3 LinearToSRGB(half3 linRGB)
+{
+    // from https://chilliant.blogspot.com/2012/08/srgb-approximations-for-hlsl.html
+    return max(1.055h * pow(abs(linRGB), 0.416666667h) - 0.055h, 0.h);
+}
+
+void LinearToSRGB(inout float3 rgb[16])
+{
+    for (int i = 0; i < 16; ++i)
+        rgb[i] = LinearToSRGB(rgb[i]);
+}
+
+#include "External/FastBlockCompress/BlockCompress.hlsli"
+
+#if defined(TARGET_UINT2)
+[numthreads(8, 8, 1)]
+void EncodeBC1_XDK(uint2 dtid : SV_DispatchThreadID)
+{
+    float3 colors[16];
+    LoadTexelBlockRGB(_Source, dtid, colors);
+    LinearToSRGB(colors);
+    uint2 block = CompressBC1Block(colors);
+    _Target[dtid] = block;
+}
+#endif
+
+#if defined(TARGET_UINT4)
+[numthreads(8, 8, 1)]
+void EncodeBC3_XDK(uint2 dtid : SV_DispatchThreadID)
+{
+    float3 colors[16];
+    float alphas[16];
+    LoadTexelBlockRGBA(_Source, dtid, colors, alphas);
+    LinearToSRGB(colors);
+    uint4 block = CompressBC3Block(colors, alphas, 1.0f);
+    _Target[dtid] = block;
+}
+#endif
+
+#endif

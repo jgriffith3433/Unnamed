@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: ac154b4761fb55044bc8a6d17a431c0c
+labels:
+- GaiaManagerSpawner
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 217085
+  packageName: Deep Desert - Micro Biome
+  packageVersion: 1.0.1
+  assetPath: Assets/Procedural Worlds/Content Packs/Deep Desert/Gaia/Biomes/Gaia
+    Spawners/Deep Desert - Detailed Around Rocks.asset
+  uploadId: 497660

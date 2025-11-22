@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: eb97ce1e43abe024d9b8beedf5b5e605
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 217085
+  packageName: Deep Desert - Micro Biome
+  packageVersion: 1.0.1
+  assetPath: Assets/Procedural Worlds/Content Packs/Deep Desert/GeNa/Spawners/Plants/Spawner
+    - Stylised Agaves.prefab
+  uploadId: 497660

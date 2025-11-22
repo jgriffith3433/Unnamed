@@ -1,0 +1,117 @@
+#pragma kernel DoLOD
+#pragma kernel DoLODShadow
+
+// Structures
+struct StormItemData
+{
+    float3 Position;
+    float4 Rotation;
+    float3 Scale;
+    float2 ExtraData;
+};
+
+// Buffers
+RWStructuredBuffer<StormItemData> OutputLOD;
+RWStructuredBuffer<uint> OutputCounts;
+
+StructuredBuffer<StormItemData> InputItems;
+StructuredBuffer<uint> InputCounts;
+
+int LOD;
+float4 LODRanges;
+
+[numthreads(64, 1, 1)]
+void DoLOD(uint3 id : SV_DispatchThreadID)
+{
+    uint InputCount = InputCounts.Load(0);
+    if (id.x >= InputCount)
+        return;
+
+    StormItemData item = InputItems.Load(id.x);
+    int index;
+    float dist = item.ExtraData.y;
+    item.ExtraData.y = 0;
+    float dMin;
+    float dMax;
+    if (LOD == 0)
+    {
+        dMin = -1;
+        dMax = LODRanges.x;
+    }
+    else if (LOD == 1)
+    {
+        dMin = LODRanges.x;
+        dMax = LODRanges.y;
+    }
+    else if (LOD == 2)
+    {
+        dMin = LODRanges.y;
+        dMax = LODRanges.z;
+    }
+    else if (LOD == 3)
+    {
+        dMin = LODRanges.z;
+        dMax = LODRanges.w;
+    }
+    else
+    {
+        dMin = LODRanges.w;
+        dMax = -1;
+    }
+
+    if (dist > dMin && (dMax < 0 || dist <= dMax))
+    {
+        item.ExtraData.y = 0;
+        InterlockedAdd(OutputCounts[LOD], 1, index);
+        OutputLOD[index] = item;
+        return;
+    }
+}
+
+[numthreads(64, 1, 1)]
+void DoLODShadow(uint3 id : SV_DispatchThreadID)
+{
+    uint InputCount = InputCounts.Load(1);
+    if (id.x >= InputCount)
+        return;
+
+    StormItemData item = InputItems.Load(id.x);
+    int index;
+    float dist = item.ExtraData.y;
+    item.ExtraData.y = 0;
+    float dMin;
+    float dMax;
+    if (LOD == 0)
+    {
+        dMin = -1;
+        dMax = LODRanges.x;
+    }
+    else if (LOD == 1)
+    {
+        dMin = LODRanges.x;
+        dMax = LODRanges.y;
+    }
+    else if (LOD == 2)
+    {
+        dMin = LODRanges.y;
+        dMax = LODRanges.z;
+    }
+    else if (LOD == 3)
+    {
+        dMin = LODRanges.z;
+        dMax = LODRanges.w;
+    }
+    else
+    {
+        dMin = LODRanges.w;
+        dMax = -1;
+    }
+
+    if (dist > dMin && (dMax < 0 || dist <= dMax))
+    {
+        item.ExtraData.y = 0;
+        InterlockedAdd(OutputCounts[LOD], 1, index);
+        OutputLOD[index] = item;
+        return;
+    }
+}

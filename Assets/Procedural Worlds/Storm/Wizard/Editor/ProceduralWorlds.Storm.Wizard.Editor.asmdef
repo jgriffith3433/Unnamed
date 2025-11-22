@@ -1,0 +1,20 @@
+{
+    "name": "ProceduralWorlds.Storm.Wizard.Editor",
+    "rootNamespace": "",
+    "references": [
+        "ProceduralWorlds.Storm.Wizard.Core",
+        "ProceduralWorlds.Storm.Core",
+        "ProceduralWorlds.Storm.Utils"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

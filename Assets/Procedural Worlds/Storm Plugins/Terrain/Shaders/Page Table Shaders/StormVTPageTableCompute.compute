@@ -1,0 +1,160 @@
+// BasicCompute.shader
+#pragma kernel CSMain
+#pragma kernel PageTableKernal_64
+#pragma kernel PageTableKernal_32
+#pragma kernel PageTableKernal_16
+
+// Texture to read from
+RWTexture2DArray<float4> InputTextureMip0;
+RWTexture2DArray<float4> InputTextureMip1;
+RWTexture2DArray<float4> InputTextureMip2;
+RWTexture2DArray<float4> InputTextureMip3;
+RWTexture2DArray<float4> InputTextureMip4;
+
+#define MAX_PAGETABLE_COUNT 16
+#define MAX_NODE_COUNT 512
+
+uint _TextureResolution; // The resolution of the texture (width, height)
+uint _NodeCount;
+
+struct NodeData
+{
+    uint2 physicalTextureCoords;
+    float2 centerPos;
+    float worldScale;
+    uint zoomLevel;
+    uint hasChildren;
+};
+
+struct PageTableData
+{
+    float2 centerPos;
+    float worldScale;
+};
+
+StructuredBuffer<NodeData> _NodeDataBuffer;
+StructuredBuffer<PageTableData> _PageTableDataBuffer;
+
+#define COLOR_DIVIDER 0.003921568627451
+
+// Define the function to calculate Chebyshev distance
+float ChebyshevDistance(float2 a, float2 b)
+{
+    return max(abs(b.x - a.x), abs(b.y - a.y));
+}
+
+void UpdatePageTable(uint3 id)
+{
+     // normalized to [0, 1], added 0.5 to center
+    float2 normalizedPos = (id.xy + 0.5) / _TextureResolution;
+    float2 normalizedPosMip1 = (id.xy + 0.5) / (_TextureResolution * 0.5);
+    float2 normalizedPosMip2 = (id.xy + 0.5) / (_TextureResolution * 0.25);
+    float2 normalizedPosMip3 = (id.xy + 0.5) / (_TextureResolution * 0.125);
+    float2 normalizedPosMip4 = (id.xy + 0.5) / (_TextureResolution * 0.0625);
+    
+    //Grab the page table index we are operating on (Z depth of compute shader)
+    const uint sliceIndex = id.z;
+    
+    //Get reference to page table
+    const PageTableData pageTable = _PageTableDataBuffer[sliceIndex];
+
+    //Get page table size
+    const float pageTableScale = pageTable.worldScale;
+                
+    //Create uv index for page table
+    const uint3 pageTableUVIndex = uint3(id.xy, sliceIndex);
+                  
+    // Convert id.xy to world space coordinates within this pageTable
+    const float2 pixelWorldPos = (normalizedPos * pageTableScale) - (pageTableScale * 0.5f) + pageTable.centerPos;
+    const float2 pixelWorldPosMip1 = (normalizedPosMip1 * pageTableScale) - (pageTableScale * 0.5f) + pageTable.centerPos;
+    const float2 pixelWorldPosMip2 = (normalizedPosMip2 * pageTableScale) - (pageTableScale * 0.5f) + pageTable.centerPos;
+    const float2 pixelWorldPosMip3 = (normalizedPosMip3 * pageTableScale) - (pageTableScale * 0.5f) + pageTable.centerPos;
+    const float2 pixelWorldPosMip4 = (normalizedPosMip4 * pageTableScale) - (pageTableScale * 0.5f) + pageTable.centerPos;
+    
+    uint prevZoom = 23;
+    uint prevZoomMip1 = 23;
+    uint prevZoomMip2 = 23;
+    uint prevZoomMip3 = 23;
+    uint prevZoomMip4 = 23;
+
+    //Loop through all nodes first
+    for (uint nodeIndex = 0; nodeIndex < _NodeCount; nodeIndex++)
+    {
+        //Get Node
+        const NodeData node = _NodeDataBuffer[nodeIndex];
+        const float4 nodeColor = float4(
+                (float) node.physicalTextureCoords.x * COLOR_DIVIDER,
+                (float) node.physicalTextureCoords.y * COLOR_DIVIDER,
+                (float) node.zoomLevel * COLOR_DIVIDER,
+                (float) 1.0);
+
+        if(node.zoomLevel < prevZoom)
+        {
+            //Check if node fits into this page talbe (in world space)
+            if (!(ChebyshevDistance(node.centerPos, pixelWorldPos) >= (node.worldScale * 0.5f)))
+            {
+                InputTextureMip0[pageTableUVIndex] = nodeColor;
+                prevZoom = node.zoomLevel;
+            }
+            
+           
+        }
+        if(node.zoomLevel < prevZoomMip1)
+        {
+            if (!(ChebyshevDistance(node.centerPos, pixelWorldPosMip1) >= (node.worldScale * 0.5f)))
+            {
+                InputTextureMip1[pageTableUVIndex] = nodeColor;
+                prevZoomMip1 = node.zoomLevel;
+            }
+        }
+        if(node.zoomLevel < prevZoomMip2)
+        {
+            if (!(ChebyshevDistance(node.centerPos, pixelWorldPosMip2) >= (node.worldScale * 0.5f)))
+            {
+                InputTextureMip2[pageTableUVIndex] = nodeColor;
+                prevZoomMip2 = node.zoomLevel;
+            }
+        }
+        if(node.zoomLevel < prevZoomMip3)
+        {
+            if (!(ChebyshevDistance(node.centerPos, pixelWorldPosMip3) >= (node.worldScale * 0.5f)))
+            {
+                InputTextureMip3[pageTableUVIndex] = nodeColor;
+                prevZoomMip3 = node.zoomLevel;
+            }
+        }
+        if(node.zoomLevel < prevZoomMip4)
+        {
+            if (!(ChebyshevDistance(node.centerPos, pixelWorldPosMip4) >= (node.worldScale * 0.5f)))
+            {
+                InputTextureMip4[pageTableUVIndex] = nodeColor;
+                prevZoomMip4 = node.zoomLevel;
+            }
+        }
+    }
+
+}
+
+[numthreads(8, 8, 4)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    UpdatePageTable(id);
+}
+
+[numthreads(8, 8, 4)]
+void PageTableKernal_64(uint3 id : SV_DispatchThreadID)
+{
+    UpdatePageTable(id);
+}
+
+[numthreads(8, 8, 4)]
+void PageTableKernal_32(uint3 id : SV_DispatchThreadID)
+{
+    UpdatePageTable(id);
+}
+
+[numthreads(4, 4, 4)]
+void PageTableKernal_16(uint3 id : SV_DispatchThreadID)
+{
+    UpdatePageTable(id);
+}

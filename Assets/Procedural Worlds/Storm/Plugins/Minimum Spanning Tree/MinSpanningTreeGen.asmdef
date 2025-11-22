@@ -1,0 +1,16 @@
+{
+    "name": "MinSpanningTreeGen",
+    "rootNamespace": "",
+    "references": [
+        "GUID:96c4d38780c76d4429eb283ca25d0865"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

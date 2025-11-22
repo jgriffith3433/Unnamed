@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 4d64d8281a45a494491538e72d3d83c6
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 217085
+  packageName: Deep Desert - Micro Biome
+  packageVersion: 1.0.1
+  assetPath: Assets/Procedural Worlds/Content Packs/Deep Desert/GeNa/Spawners/Plants/Spawner
+    - Stylised Bushes.prefab
+  uploadId: 497660

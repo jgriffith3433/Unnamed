@@ -1,0 +1,20 @@
+{
+    "name": "ProceduralWorlds.Storm.Wizard.Core",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d95183a8ad3b9e54bbc85567405abf13",
+        "GUID:5f30c188beae26c46825dc89745c37b1",
+        "GUID:718fdd1d539414544804fca11f420d6d"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

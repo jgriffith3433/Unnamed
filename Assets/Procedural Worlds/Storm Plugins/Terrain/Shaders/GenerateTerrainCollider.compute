@@ -1,0 +1,153 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+RWTexture2D<float4> Result;
+
+Texture2D<float4> Heightmap;
+uint heightmapResolution;
+float heightScale;
+float heightOffset;
+RWStructuredBuffer<float3> m_vertexBuffer;
+RWStructuredBuffer<float3> m_baseVertexBuffer;
+
+float2 terrainPivotPos;
+float terrainScale;
+
+float2 tilePivotPos;
+float tileScale;
+
+int gridSize;
+
+float4 BilinearSample(Texture2D tex, float2 uv, float2 texSize)
+{
+    float2 uvScaled = uv * texSize - 0.5;
+
+    uint2 uvMin = uint2(floor(uvScaled));
+    uint2 uvMax = uvMin + 1;
+
+    float2 frac = uvScaled - float2(uvMin);
+    
+    if (uvMax.x >= heightmapResolution)
+    {
+        uvMax.x = heightmapResolution - 1;
+    }
+    if (uvMax.y >= heightmapResolution)
+    {
+        uvMax.y = heightmapResolution - 1;
+    }
+    
+    if (uvMin.x < 0)
+    {
+        uvMin.x = 0;
+    }
+    if (uvMin.y < 0)
+    {
+        uvMin.y = 0;
+    }
+    
+
+    float4 col00 = tex[int2(uvMin.x, uvMin.y)];
+    float4 col10 = tex[int2(uvMax.x, uvMin.y)];
+    float4 col01 = tex[int2(uvMin.x, uvMax.y)];
+    float4 col11 = tex[int2(uvMax.x, uvMax.y)];
+
+    float4 col0 = lerp(col00, col10, frac.x);
+    float4 col1 = lerp(col01, col11, frac.x);
+
+    return lerp(col0, col1, frac.y);
+}
+
+
+//[numthreads(16,16,1)]
+void GenerateSlice (uint3 id : SV_DispatchThreadID)
+{
+    
+    //Early out if we go past vertex size
+    if (id.x > uint(gridSize + 2) || id.y > uint(gridSize + 2))
+        return;
+    
+    //Calculate id of the vertex buffer
+    uint vertexID = (id.x * gridSize + id.y);
+    
+    uint numVertices = (uint)((gridSize + 1) * (gridSize + 1));
+    
+    if (vertexID > numVertices)
+    {
+        return;
+    }
+    
+    //Sample the vertex
+    float3 vertex = m_baseVertexBuffer[vertexID];
+    
+    //Normalize Vertex Position into 0-1 range
+    float2 normalizedVertexPos = float2((vertex.x / gridSize), (vertex.z / gridSize));
+    
+    //Convert Normalized Vertex into Tile World Space Position
+    float2 vertexWorldPos = (normalizedVertexPos * tileScale) + tilePivotPos;
+    
+    // Determine uv scale of this slice
+    float sliceFraction = tileScale / terrainScale;
+    
+    float2 relativeTilePos = vertexWorldPos - terrainPivotPos;
+    float2 uvCoord = (relativeTilePos / terrainScale);
+    
+    //Sample the heightmap
+    uint2 texelCoord = uint2(uvCoord * heightmapResolution);
+
+    
+    if (vertex.x == (gridSize))
+    {
+        if (texelCoord.x >= heightmapResolution)
+        {
+            texelCoord.x = heightmapResolution - 1;
+        }
+    }
+    
+    if (vertex.z == (gridSize))
+    {
+
+        if (texelCoord.y >= heightmapResolution)
+        {
+            texelCoord.y = heightmapResolution - 1;
+        }
+    }
+    
+    //vertex.y = (Heightmap[texelCoord].r * heightScale) + heightOffset;
+    vertex.y = BilinearSample(Heightmap, uvCoord, float2(heightmapResolution, heightmapResolution)).r * heightScale + heightOffset;
+    
+
+    
+    //Scale the tile
+    vertex.xz = normalizedVertexPos * tileScale;
+    
+    //Update vertex in buffer
+    m_vertexBuffer[vertexID] = vertex;
+    
+}
+
+
+[numthreads(8, 8, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    GenerateSlice(id);
+}
+
+[numthreads(8, 8, 1)]
+void GenerateSliceKernal_64(uint3 id : SV_DispatchThreadID)
+{
+    GenerateSlice(id);
+}
+
+[numthreads(8, 8, 1)]
+void GenerateSliceKernal_32(uint3 id : SV_DispatchThreadID)
+{
+    GenerateSlice(id);
+}
+
+[numthreads(4, 4, 1)]
+void GenerateSliceKernal_16(uint3 id : SV_DispatchThreadID)
+{
+    GenerateSlice(id);
+}

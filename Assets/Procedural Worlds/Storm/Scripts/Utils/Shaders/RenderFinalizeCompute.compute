@@ -1,0 +1,158 @@
+#pragma kernel CSRenderFinalize
+
+// Structs matching the C# data structures
+struct StormItemData
+{
+    float3 Translation;
+    float4 Rotation;
+    float3 Scale;
+    float2 ExtraData;
+};
+
+struct StormRenderData
+{
+    float4x4 Matrix;
+    float2 ExtraData;
+};
+
+struct ObjectSettings {
+    float3 Offset;
+    float4 Rotation;    // Using float4 for quaternion
+    float3 Scale;
+};
+
+// Input/Output buffers
+StructuredBuffer<ObjectSettings> Settings;
+StructuredBuffer<StormItemData> Input;
+AppendStructuredBuffer<StormRenderData> Output;
+AppendStructuredBuffer<StormRenderData> OutputInverse;
+
+StructuredBuffer<uint> InputCounts;
+int InputLOD;
+uint OutputCount;
+uint OutputInverseCount;
+
+float4x4 GetRotation(float4 q)
+{
+    float xx = q.x * (q.x + q.x);
+    float xy = q.x * (q.y + q.y);
+    float xz = q.x * (q.z + q.z);
+    float yy = q.y * (q.y + q.y);
+    float yz = q.y * (q.z + q.z);
+    float zz = q.z * (q.z + q.z);
+    float wx = q.w * (q.x + q.x);
+    float wy = q.w * (q.y + q.y);
+    float wz = q.w * (q.z + q.z);
+
+    return float4x4(
+        float4(
+            1.0 - (yy + zz),
+            xy - wz,
+            xz + wy,
+            0),
+        float4(
+            xy + wz,
+            1.0 - (xx + zz),
+            yz - wx,
+            0),
+        float4(
+            xz - wy,
+            yz + wx,
+            1.0 - (xx + yy),
+            0),
+        float4(0, 0, 0, 1));
+}
+float4x4 GetScale(float4x4 m, float3 s)
+{
+    m._11 *= s.x;
+    m._21 *= s.y;
+    m._31 *= s.z;
+    m._12 *= s.x;
+    m._22 *= s.y;
+    m._32 *= s.z;
+    m._13 *= s.x;
+    m._23 *= s.y;
+    m._33 *= s.z;
+    m._14 *= s.x;
+    m._24 *= s.y;
+    m._34 *= s.z;
+    return m;
+}
+StormRenderData GetRenderData(StormItemData item)
+{
+    StormRenderData ret;
+
+    ret.Matrix = GetScale(GetRotation(item.Rotation), item.Scale);
+    ret.Matrix._14_24_34 = item.Translation;
+    ret.ExtraData = item.ExtraData.xy;
+
+    return ret;
+}
+
+// Helper functions for quaternion operations
+float4 quaternion_multiply(float4 a, float4 b)
+{
+    return normalize(float4(
+        a.w * b.xyz + b.w * a.xyz + cross(a.xyz, b.xyz),
+        a.w * b.w - dot(a.xyz, b.xyz)
+        ));
+}
+
+float3 rotate_vector(float4 q, float3 v)
+{
+    float3 qvec = q.xyz;
+    float3 uv = cross(qvec, v);
+    float3 uuv = cross(qvec, uv);
+    return v + ((uv * q.w) + uuv) * 2;
+}
+
+[numthreads(64, 1, 1)]
+void CSRenderFinalize(uint3 id : SV_DispatchThreadID)
+{
+    // Early exit if the thread ID is beyond our data
+    if (id.x >= InputCounts.Load(InputLOD)) return;
+
+    // Get the instance data
+    StormItemData item = Input.Load(id.x);
+    ObjectSettings oSettings = Settings.Load(0);
+
+    // Apply offset scaled by item scale
+    float3 scaledOffset = float3(
+        oSettings.Offset.x * item.Scale.x,
+        oSettings.Offset.y * item.Scale.y,
+        oSettings.Offset.z * item.Scale.z
+        );
+
+    // Rotate the offset by item rotation and add to translation
+    item.Translation += rotate_vector(item.Rotation, scaledOffset);
+
+    // Scale the item
+    item.Scale = float3(
+        item.Scale.x * oSettings.Scale.x,
+        item.Scale.y * oSettings.Scale.y,
+        item.Scale.z * oSettings.Scale.z
+        );
+
+    // Combine rotations
+    item.Rotation = quaternion_multiply(item.Rotation, oSettings.Rotation);
+
+    // Create the transformation matrix
+    StormRenderData renderData = GetRenderData(item);
+    //renderData.Matrix = matrix_trs(item.Translation, item.Rotation, item.Scale);
+    //renderData.ExtraData = item.ExtraData;
+
+    // Check scale signs for determining output buffer
+    bool scaleXNeg = item.Scale.x < 0;
+    bool scaleYNeg = item.Scale.y < 0;
+    bool scaleZNeg = item.Scale.z < 0;
+
+    // XOR operation on scale signs
+    if (scaleXNeg ^ scaleYNeg ^ scaleZNeg)
+    {
+        OutputInverse.Append(renderData);
+    }
+    else
+    {
+        Output.Append(renderData);
+    }
+}

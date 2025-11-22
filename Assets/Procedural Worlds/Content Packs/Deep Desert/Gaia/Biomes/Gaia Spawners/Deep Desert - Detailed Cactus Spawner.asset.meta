@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: e90badd599caba64db14f9e347732bc0
+labels:
+- GaiaManagerSpawner
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 217085
+  packageName: Deep Desert - Micro Biome
+  packageVersion: 1.0.1
+  assetPath: Assets/Procedural Worlds/Content Packs/Deep Desert/Gaia/Biomes/Gaia
+    Spawners/Deep Desert - Detailed Cactus Spawner.asset
+  uploadId: 497660

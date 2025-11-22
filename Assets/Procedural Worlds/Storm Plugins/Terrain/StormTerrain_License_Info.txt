@@ -1,0 +1,18 @@
+Storm is being sold and licensed to the end user under the Unity asset store license: https://unity3d.com/legal/as_terms.
+
+Portions of this asset were created under usage of additional resources. The files found in the following folders are governed by additional licenses:
+
+Folder:
+Procedural Worlds\Storm\Plugins\Dependencies\Asynchronous Image Loader
+Derived from the project "Asynchronous Image Loader", obtainable from: https://github.com/IvanMurzak/Unity-ImageLoader
+License: MIT License, see Procedural Worlds\Storm\Plugins\Dependencies\Asynchronous Image Loader\LICENSE
+
+Folder: 
+Procedural Worlds\Storm\Plugins\Dependencies\GPUTexCompression
+Derived from the Unity Standard Shaders package obtainable from: https://github.com/aras-p/UnityGPUTexCompression/tree/main
+License: see Procedural Worlds\Storm\Plugins\Dependencies\GPUTexCompression\External\FastBlockCompress\License.txt
+
+Folder: 
+Procedural Worlds\Storm\Plugins\Dependencies\ASTC Encoder
+Derived from the Unity Standard Shaders package obtainable from: https://github.com/niepp/astc_encoder/tree/main
+License: see Procedural Worlds\Storm\Plugins\Dependencies\ASTC Encoder\License.txt

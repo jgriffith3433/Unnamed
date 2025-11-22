@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 812345a224d84ef4cb01c6d02badb757
+labels:
+- GaiaManagerSpawner
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 217085
+  packageName: Deep Desert - Micro Biome
+  packageVersion: 1.0.1
+  assetPath: Assets/Procedural Worlds/Content Packs/Deep Desert/Gaia/Biomes/Gaia
+    Spawners/Deep Desert - Detailed Rock Cliff Spawner.asset
+  uploadId: 497660

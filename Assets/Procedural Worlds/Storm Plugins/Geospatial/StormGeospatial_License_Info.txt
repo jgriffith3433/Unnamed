@@ -1,0 +1,13 @@
+Storm is being sold and licensed to the end user under the Unity asset store license: https://unity3d.com/legal/as_terms.
+
+Portions of this asset were created under usage of additional resources. The files found in the following folders are governed by additional licenses:
+
+Folder:
+Procedural Worlds\Storm\Geospatial\Plugins\
+Derived from the OSGeo project "GDAL", obtainable from: https://gdal.org/en/stable/
+License: MIT License, see https://gdal.org/en/stable/license.html
+
+The GDAL library is being accessed through "gdal.netcore" a build engine for GDAL.
+Derived from the gdal.netcore project, obtainable from: https://github.com/MaxRev-Dev/gdal.netcore/
+License: MIT License, see https://github.com/MaxRev-Dev/gdal.netcore/blob/main/LICENSE
+

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 55a21c857d23d134499eb9c7505b7765
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 217085
+  packageName: Deep Desert - Micro Biome
+  packageVersion: 1.0.1
+  assetPath: Assets/Procedural Worlds/Content Packs/Deep Desert/GeNa/Spawners/Rocks/Spawner
+    - Detailed Spires.prefab
+  uploadId: 497660

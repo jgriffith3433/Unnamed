@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 5b90b41c72b065146b7c9ebe6a1ce3f4
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 112000000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 217085
+  packageName: Deep Desert - Micro Biome
+  packageVersion: 1.0.1
+  assetPath: Assets/Procedural Worlds/Content Packs/Deep Desert/Demo/Scenes/Gaia
+    Demo Scene Content/Gaia Demo/LightingData.asset
+  uploadId: 497660

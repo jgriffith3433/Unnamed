@@ -1,0 +1,19 @@
+{
+    "name": "ProceduralWorlds.Storm.StructureUtils",
+    "rootNamespace": "",
+    "references": [
+        "GUID:481404b03b0271149affd54a403febc6",
+        "GUID:d95183a8ad3b9e54bbc85567405abf13",
+        "GUID:27a89800f602d1b4389e94754cd61c4b",
+        "GUID:9c96ea0470ea89047ba0dc8e21473c01"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

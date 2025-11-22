@@ -1,0 +1,19 @@
+{
+    "name": "ProceduralWorlds.Storm.AreaPopulator.Utils",
+    "rootNamespace": "",
+    "references": [
+        "ProceduralWorlds.Storm.Core",
+        "ProceduralWorlds.Storm.StructureCore",
+        "ProceduralWorlds.Storm.AreaPopulator.Core",
+        "ProceduralWorlds.Storm.AreaPopulator.Data"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
