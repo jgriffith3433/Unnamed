@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 1b28f2ba5ae6a58469a3622f9d93cc74
+timeCreated: 1568454963
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 154224
+  packageName: Realistic Bonfire Type # 1 Campfire
+  packageVersion: 1.0
+  assetPath: Assets/Bonfires/Bonfire_Type_01_Campfire/Models/Fire_Light_Animator_Controller_02.controller
+  uploadId: 332230

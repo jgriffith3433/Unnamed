@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: d437541b41dbe1b45ba118c493e7ebe5
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213293
+  packageName: 'Spaceship with Full Interior: Phobos Starhopper'
+  packageVersion: 1.1.4
+  assetPath: Assets/VattalusAssets/Common/Skyboxes/Starfield - PulsarBytes/credits.txt
+  uploadId: 811128

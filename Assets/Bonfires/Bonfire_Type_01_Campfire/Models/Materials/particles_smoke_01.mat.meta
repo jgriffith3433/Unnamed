@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: fc183bb9528d8dc428b4a1dd0150c2ec
+timeCreated: 1568799128
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: -1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 154224
+  packageName: Realistic Bonfire Type # 1 Campfire
+  packageVersion: 1.0
+  assetPath: Assets/Bonfires/Bonfire_Type_01_Campfire/Models/Materials/particles_smoke_01.mat
+  uploadId: 332230

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 2dec4f2f6f706754e8e81c34bc7a1298
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213293
+  packageName: 'Spaceship with Full Interior: Phobos Starhopper'
+  packageVersion: 1.1.4
+  assetPath: Assets/VattalusAssets/PhobosStarhopper/Phobos_Update_Readme.txt
+  uploadId: 811128

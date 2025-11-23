@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 316c2f0c95f018440943181801e23bbf
+timeCreated: 1568799128
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: -1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 154224
+  packageName: Realistic Bonfire Type # 1 Campfire
+  packageVersion: 1.0
+  assetPath: Assets/Bonfires/Bonfire_Type_01_Campfire/Models/Materials/platform.mat
+  uploadId: 332230

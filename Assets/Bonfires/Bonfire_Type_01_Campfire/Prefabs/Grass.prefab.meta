@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 562cdb02b64943e4d8cb0d99eca0a0df
+timeCreated: 1568406103
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 154224
+  packageName: Realistic Bonfire Type # 1 Campfire
+  packageVersion: 1.0
+  assetPath: Assets/Bonfires/Bonfire_Type_01_Campfire/Prefabs/Grass.prefab
+  uploadId: 332230

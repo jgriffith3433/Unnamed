@@ -1,0 +1,11 @@
+{
+    "asset": "2007bb8d5d3fae64891c5a437434d112",
+    "fileName": "019aaff2-69ec-79f9-b955-3a56701d4091.pose.json",
+    "prompt": "Dance sway",
+    "negativePrompt": "",
+    "model": "9e46c009-67d8-4254-a3a0-32e3168247ee",
+    "modelName": "Text to Motion",
+    "customSeed": 116830779,
+    "w3CTraceId": "69d2044e2515e02f95562976ce0f0a5d",
+    "isTrimmed": false
+}

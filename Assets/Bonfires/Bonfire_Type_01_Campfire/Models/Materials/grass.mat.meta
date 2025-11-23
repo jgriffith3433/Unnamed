@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: e1a7431d47a75214c853455fd263753a
+timeCreated: 1568799084
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 154224
+  packageName: Realistic Bonfire Type # 1 Campfire
+  packageVersion: 1.0
+  assetPath: Assets/Bonfires/Bonfire_Type_01_Campfire/Models/Materials/grass.mat
+  uploadId: 332230

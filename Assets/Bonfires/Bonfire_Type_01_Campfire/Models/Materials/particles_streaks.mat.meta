@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 3e3c65c383a078147b8a0c3a2b253147
+timeCreated: 1568799128
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: -1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 154224
+  packageName: Realistic Bonfire Type # 1 Campfire
+  packageVersion: 1.0
+  assetPath: Assets/Bonfires/Bonfire_Type_01_Campfire/Models/Materials/particles_streaks.mat
+  uploadId: 332230

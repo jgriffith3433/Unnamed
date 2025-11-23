@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: ad678196ca674014ba87a208bef513e3
+timeCreated: 1568350233
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 154224
+  packageName: Realistic Bonfire Type # 1 Campfire
+  packageVersion: 1.0
+  assetPath: Assets/Bonfires/Bonfire_Type_01_Campfire/Scripts/_CameraRotate_BF01.cs
+  uploadId: 332230

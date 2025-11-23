@@ -33,6 +33,12 @@ namespace StarterAssets
         [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
 
         [Space(10)]
+        [Tooltip("Whether the player can jump")]
+        public bool CanJump = true;
+
+        [Tooltip("Whether the player can move")]
+        public bool CanMove = true;
+
         [Tooltip("The height the player can jump")]
         public float JumpHeight = 1.2f;
 
@@ -97,6 +103,7 @@ namespace StarterAssets
         private int _animIDJump;
         private int _animIDFreeFall;
         private int _animIDMotionSpeed;
+        private int _animIDDance;
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
         private PlayerInput _playerInput;
@@ -173,6 +180,7 @@ namespace StarterAssets
             _animIDJump = Animator.StringToHash("Jump");
             _animIDFreeFall = Animator.StringToHash("FreeFall");
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+            _animIDDance = Animator.StringToHash("Dance");
         }
 
         private void GroundedCheck()
@@ -213,6 +221,18 @@ namespace StarterAssets
 
         private void Move()
         {
+            // Check if movement is allowed
+            if (!CanMove)
+            {
+                // Update animator with zero speed when can't move
+                if (_hasAnimator)
+                {
+                    _animator.SetFloat(_animIDSpeed, 0f);
+                    _animator.SetFloat(_animIDMotionSpeed, 0f);
+                }
+                return;
+            }
+
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
@@ -300,7 +320,7 @@ namespace StarterAssets
                 }
 
                 // Jump
-                if (_input.jump && _jumpTimeoutDelta <= 0.0f)
+                if (_input.jump && _jumpTimeoutDelta <= 0.0f && CanJump)
                 {
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
                     _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
@@ -387,6 +407,24 @@ namespace StarterAssets
             {
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
             }
+        }
+
+        public void TriggerDance()
+        {
+            if (_hasAnimator)
+            {
+                _animator.SetTrigger(_animIDDance);
+                CanMove = false;
+                CanJump = false;
+                Debug.Log("Dance triggered - movement disabled");
+            }
+        }
+
+        public void EnableMovement()
+        {
+            CanMove = true;
+            CanJump = true;
+            Debug.Log("Movement enabled");
         }
     }
 }

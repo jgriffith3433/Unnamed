@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 8691d91553dc0ed488664dab976c22ee
+timeCreated: 1568799004
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 154224
+  packageName: Realistic Bonfire Type # 1 Campfire
+  packageVersion: 1.0
+  assetPath: Assets/Bonfires/Bonfire_Type_01_Campfire/Prefabs/World_Lights_Night.prefab
+  uploadId: 332230

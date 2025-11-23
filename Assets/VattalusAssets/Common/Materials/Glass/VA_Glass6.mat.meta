@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 729dfa83c20691d48a9ba66d97d00087
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213293
+  packageName: 'Spaceship with Full Interior: Phobos Starhopper'
+  packageVersion: 1.1.4
+  assetPath: Assets/VattalusAssets/Common/Materials/Glass/VA_Glass6.mat
+  uploadId: 811128

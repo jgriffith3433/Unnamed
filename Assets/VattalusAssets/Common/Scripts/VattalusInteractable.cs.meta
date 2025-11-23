@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 217d1c1322ae2a540aec0a18d42d6784
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213293
+  packageName: 'Spaceship with Full Interior: Phobos Starhopper'
+  packageVersion: 1.1.4
+  assetPath: Assets/VattalusAssets/Common/Scripts/VattalusInteractable.cs
+  uploadId: 811128

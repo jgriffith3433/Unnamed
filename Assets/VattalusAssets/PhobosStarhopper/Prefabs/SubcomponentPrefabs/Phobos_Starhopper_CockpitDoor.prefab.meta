@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 31d1e83b260d6cb4ba3ef8e7b58bbcc8
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213293
+  packageName: 'Spaceship with Full Interior: Phobos Starhopper'
+  packageVersion: 1.1.4
+  assetPath: Assets/VattalusAssets/PhobosStarhopper/Prefabs/SubcomponentPrefabs/Phobos_Starhopper_CockpitDoor.prefab
+  uploadId: 811128

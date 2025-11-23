@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: f6b0458db3222b54181201a51c56e6a7
+timeCreated: 1568799018
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 154224
+  packageName: Realistic Bonfire Type # 1 Campfire
+  packageVersion: 1.0
+  assetPath: Assets/Bonfires/Bonfire_Type_01_Campfire/Prefabs/Platform.prefab
+  uploadId: 332230

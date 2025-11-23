@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: c4d11dcd10f9dbe4e8048b9543be3e8c
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213293
+  packageName: 'Spaceship with Full Interior: Phobos Starhopper'
+  packageVersion: 1.1.4
+  assetPath: Assets/VattalusAssets/PhobosStarhopper/Prefabs/SubcomponentPrefabs/Phobos_Starhopper_BathroomDoor.prefab
+  uploadId: 811128

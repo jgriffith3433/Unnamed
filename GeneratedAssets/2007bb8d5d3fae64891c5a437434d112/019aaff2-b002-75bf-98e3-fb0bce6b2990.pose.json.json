@@ -1,0 +1,11 @@
+{
+    "asset": "2007bb8d5d3fae64891c5a437434d112",
+    "fileName": "019aaff2-b002-75bf-98e3-fb0bce6b2990.pose.json",
+    "prompt": "Sway to a slow song",
+    "negativePrompt": "",
+    "model": "9e46c009-67d8-4254-a3a0-32e3168247ee",
+    "modelName": "Text to Motion",
+    "customSeed": 1105467148,
+    "w3CTraceId": "296d9e546a8667f53c54cfb25e1b637c",
+    "isTrimmed": false
+}

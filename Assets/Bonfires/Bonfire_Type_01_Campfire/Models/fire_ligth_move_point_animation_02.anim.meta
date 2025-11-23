@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 894364a0b574b0246a69eda26210b3cb
+timeCreated: 1568457381
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 154224
+  packageName: Realistic Bonfire Type # 1 Campfire
+  packageVersion: 1.0
+  assetPath: Assets/Bonfires/Bonfire_Type_01_Campfire/Models/fire_ligth_move_point_animation_02.anim
+  uploadId: 332230

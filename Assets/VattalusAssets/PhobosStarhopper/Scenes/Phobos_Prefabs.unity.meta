@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: a79d9751a7e41ec4f8dd9ec0d0572ebf
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213293
+  packageName: 'Spaceship with Full Interior: Phobos Starhopper'
+  packageVersion: 1.1.4
+  assetPath: Assets/VattalusAssets/PhobosStarhopper/Scenes/Phobos_Prefabs.unity
+  uploadId: 811128

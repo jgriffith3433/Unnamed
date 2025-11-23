@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 24ab9b7014682ad4b986926d55e82e38
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213293
+  packageName: 'Spaceship with Full Interior: Phobos Starhopper'
+  packageVersion: 1.1.4
+  assetPath: Assets/VattalusAssets/Common/Materials/Fabric/FabricMat_Red.mat
+  uploadId: 811128

@@ -1,0 +1,11 @@
+{
+    "asset": "2007bb8d5d3fae64891c5a437434d112",
+    "fileName": "019aaff2-1907-7060-9b7a-13543e7d78ea.pose.json",
+    "prompt": "Dance side to side",
+    "negativePrompt": "",
+    "model": "9e46c009-67d8-4254-a3a0-32e3168247ee",
+    "modelName": "Text to Motion",
+    "customSeed": 436183696,
+    "w3CTraceId": "32749caa7dfe008f642629393c2a9cae",
+    "isTrimmed": false
+}
