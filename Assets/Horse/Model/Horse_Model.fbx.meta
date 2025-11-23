@@ -1,0 +1,207 @@
+fileFormatVersion: 2
+guid: 8b1e5901c8a74054282580ffa214926f
+timeCreated: 1459885611
+licenseType: Store
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Hors_Root
+    100002: Horse
+    100004: horse_head
+    100006: horse_jaw
+    100008: horse_jaw1
+    100010: horse_l_ear1
+    100012: horse_l_ear2
+    100014: //RootNode
+    100016: horse_neck1
+    100018: horse_neck2
+    100020: horse_neck3
+    100022: horse_neck4
+    100024: horse_neck_grp
+    100026: horse_r_ear1
+    100028: horse_r_ear2
+    100030: horse_tail1
+    100032: horse_tail2
+    100034: horse_tail3
+    100036: horse_tail4
+    100038: horse_tail5
+    100040: horse_tail6
+    100042: horse_tail7
+    100044: horse_tail_grp
+    100046: HorseBody_Mesh
+    100048: HorseHair_Mesh
+    100050: horselfemur
+    100052: horselfronthoof
+    100054: horsellargecannon
+    100056: horselleg1
+    100058: horselleg2
+    100060: horselleg3
+    100062: horselleg3_helper
+    100064: horselleg4
+    100066: horsellegankle
+    100068: horselphalanx
+    100070: horselrearhoof
+    100072: horseltibia
+    100074: horsepelvis
+    100076: horserfemur
+    100078: horserfronthoof
+    100080: horseribcage
+    100082: horserlargecannon
+    100084: horserleg1
+    100086: horserleg2
+    100088: horserleg3
+    100090: horserleg3_helper
+    100092: horserleg4
+    100094: horserlegankle
+    100096: horserphalanx
+    100098: horserrearthoof
+    100100: horsertibia
+    100102: horsespine1
+    100104: horsespine2
+    100106: horsespine2_helper
+    100108: horsespine3
+    100110: horsespine3_helper
+    100112: Horse_Body_Mesh
+    100114: Horse_Hair_Mesh
+    400000: Hors_Root
+    400002: Horse
+    400004: horse_head
+    400006: horse_jaw
+    400008: horse_jaw1
+    400010: horse_l_ear1
+    400012: horse_l_ear2
+    400014: //RootNode
+    400016: horse_neck1
+    400018: horse_neck2
+    400020: horse_neck3
+    400022: horse_neck4
+    400024: horse_neck_grp
+    400026: horse_r_ear1
+    400028: horse_r_ear2
+    400030: horse_tail1
+    400032: horse_tail2
+    400034: horse_tail3
+    400036: horse_tail4
+    400038: horse_tail5
+    400040: horse_tail6
+    400042: horse_tail7
+    400044: horse_tail_grp
+    400046: HorseBody_Mesh
+    400048: HorseHair_Mesh
+    400050: horselfemur
+    400052: horselfronthoof
+    400054: horsellargecannon
+    400056: horselleg1
+    400058: horselleg2
+    400060: horselleg3
+    400062: horselleg3_helper
+    400064: horselleg4
+    400066: horsellegankle
+    400068: horselphalanx
+    400070: horselrearhoof
+    400072: horseltibia
+    400074: horsepelvis
+    400076: horserfemur
+    400078: horserfronthoof
+    400080: horseribcage
+    400082: horserlargecannon
+    400084: horserleg1
+    400086: horserleg2
+    400088: horserleg3
+    400090: horserleg3_helper
+    400092: horserleg4
+    400094: horserlegankle
+    400096: horserphalanx
+    400098: horserrearthoof
+    400100: horsertibia
+    400102: horsespine1
+    400104: horsespine2
+    400106: horsespine2_helper
+    400108: horsespine3
+    400110: horsespine3_helper
+    400112: Horse_Body_Mesh
+    400114: Horse_Hair_Mesh
+    2300000: Horse_Body_Mesh
+    2300002: Horse_Hair_Mesh
+    3300000: Horse_Body_Mesh
+    3300002: Horse_Hair_Mesh
+    4300000: HorseBody_Mesh
+    4300002: HorseHair_Mesh
+    4300004: Horse_Body_Mesh
+    4300006: Horse_Hair_Mesh
+    7400000: Take 001
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: HorseBody_Mesh
+    13700002: HorseHair_Mesh
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 0
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 60166
+  packageName: Horse Rigged, Animated and Textured
+  packageVersion: 5.0
+  assetPath: Assets/Horse/Model/Horse_Model.fbx
+  uploadId: 227374

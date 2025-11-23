@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: e1808a648772aa744add70ddfe6d989c
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 160447
+  packageName: Animalia - Bald and Golden Eagle
+  packageVersion: 2.2.2
+  assetPath: Assets/Animalia/Eagle/BaldEagle/Meshes/BaldEagle_Bones_Prefab.prefab
+  uploadId: 640811

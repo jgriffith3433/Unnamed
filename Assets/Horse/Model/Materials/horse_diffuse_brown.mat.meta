@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b66093be367a0454ea3b720f19035d3b
+timeCreated: 1460748999
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 60166
+  packageName: Horse Rigged, Animated and Textured
+  packageVersion: 5.0
+  assetPath: Assets/Horse/Model/Materials/horse_diffuse_brown.mat
+  uploadId: 227374

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8e2e4b0c9dbccf441b6e2f509a15d3aa
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 160447
+  packageName: Animalia - Bald and Golden Eagle
+  packageVersion: 2.2.2
+  assetPath: Assets/Animalia/Eagle/GoldenEagle/Materials_HDRP/GoldenEagle_Feathers_Material.mat
+  uploadId: 640811

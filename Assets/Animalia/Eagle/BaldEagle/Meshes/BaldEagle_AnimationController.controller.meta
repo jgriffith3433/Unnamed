@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: dcf205a7a27f4984ab548e303aaa4059
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 160447
+  packageName: Animalia - Bald and Golden Eagle
+  packageVersion: 2.2.2
+  assetPath: Assets/Animalia/Eagle/BaldEagle/Meshes/BaldEagle_AnimationController.controller
+  uploadId: 640811

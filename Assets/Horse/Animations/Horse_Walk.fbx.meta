@@ -1,0 +1,355 @@
+fileFormatVersion: 2
+guid: 95c02c75ae1e7514ab8608350d11fd32
+timeCreated: 1459963738
+licenseType: Store
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: REF_Hors_Root
+    100004: REF_Horse
+    100006: REF_horse_head
+    100008: REF_horse_jaw
+    100010: REF_horse_jaw1
+    100012: REF_horse_l_ear1
+    100014: REF_horse_l_ear2
+    100016: REF_horse_neck1
+    100018: REF_horse_neck2
+    100020: REF_horse_neck3
+    100022: REF_horse_neck4
+    100024: REF_horse_neck_grp
+    100026: REF_horse_r_ear1
+    100028: REF_horse_r_ear2
+    100030: REF_horse_tail1
+    100032: REF_horse_tail2
+    100034: REF_horse_tail3
+    100036: REF_horse_tail4
+    100038: REF_horse_tail5
+    100040: REF_horse_tail6
+    100042: REF_horse_tail7
+    100044: REF_horse_tail_grp
+    100046: REF_HorseBody_Mesh
+    100048: REF_HorseHair_Mesh
+    100050: REF_horselfemur
+    100052: REF_horselfronthoof
+    100054: REF_horsellargecannon
+    100056: REF_horselleg1
+    100058: REF_horselleg2
+    100060: REF_horselleg3
+    100062: REF_horselleg3_helper
+    100064: REF_horselleg4
+    100066: REF_horsellegankle
+    100068: REF_horselphalanx
+    100070: REF_horselrearhoof
+    100072: REF_horseltibia
+    100074: REF_horsepelvis
+    100076: REF_horserfemur
+    100078: REF_horserfronthoof
+    100080: REF_horseribcage
+    100082: REF_horserlargecannon
+    100084: REF_horserleg1
+    100086: REF_horserleg2
+    100088: REF_horserleg3
+    100090: REF_horserleg3_helper
+    100092: REF_horserleg4
+    100094: REF_horserlegankle
+    100096: REF_horserphalanx
+    100098: REF_horserrearthoof
+    100100: REF_horsertibia
+    100102: REF_horsespine1
+    100104: REF_horsespine2
+    100106: REF_horsespine2_helper
+    100108: REF_horsespine3
+    100110: REF_horsespine3_helper
+    100112: REF_Horse_Body_Mesh
+    100114: REF_Horse_Hair_Mesh
+    100116: REF_Horse_Body_Mesh_New
+    100118: REF_Horse_Hair_Mesh_New
+    100120: REF_horsepelvis_new
+    400000: //RootNode
+    400002: REF_Hors_Root
+    400004: REF_Horse
+    400006: REF_horse_head
+    400008: REF_horse_jaw
+    400010: REF_horse_jaw1
+    400012: REF_horse_l_ear1
+    400014: REF_horse_l_ear2
+    400016: REF_horse_neck1
+    400018: REF_horse_neck2
+    400020: REF_horse_neck3
+    400022: REF_horse_neck4
+    400024: REF_horse_neck_grp
+    400026: REF_horse_r_ear1
+    400028: REF_horse_r_ear2
+    400030: REF_horse_tail1
+    400032: REF_horse_tail2
+    400034: REF_horse_tail3
+    400036: REF_horse_tail4
+    400038: REF_horse_tail5
+    400040: REF_horse_tail6
+    400042: REF_horse_tail7
+    400044: REF_horse_tail_grp
+    400046: REF_HorseBody_Mesh
+    400048: REF_HorseHair_Mesh
+    400050: REF_horselfemur
+    400052: REF_horselfronthoof
+    400054: REF_horsellargecannon
+    400056: REF_horselleg1
+    400058: REF_horselleg2
+    400060: REF_horselleg3
+    400062: REF_horselleg3_helper
+    400064: REF_horselleg4
+    400066: REF_horsellegankle
+    400068: REF_horselphalanx
+    400070: REF_horselrearhoof
+    400072: REF_horseltibia
+    400074: REF_horsepelvis
+    400076: REF_horserfemur
+    400078: REF_horserfronthoof
+    400080: REF_horseribcage
+    400082: REF_horserlargecannon
+    400084: REF_horserleg1
+    400086: REF_horserleg2
+    400088: REF_horserleg3
+    400090: REF_horserleg3_helper
+    400092: REF_horserleg4
+    400094: REF_horserlegankle
+    400096: REF_horserphalanx
+    400098: REF_horserrearthoof
+    400100: REF_horsertibia
+    400102: REF_horsespine1
+    400104: REF_horsespine2
+    400106: REF_horsespine2_helper
+    400108: REF_horsespine3
+    400110: REF_horsespine3_helper
+    400112: REF_Horse_Body_Mesh
+    400114: REF_Horse_Hair_Mesh
+    400116: REF_Horse_Body_Mesh_New
+    400118: REF_Horse_Hair_Mesh_New
+    400120: REF_horsepelvis_new
+    4300000: REF_HorseBody_Mesh
+    4300002: REF_HorseHair_Mesh
+    4300004: REF_Horse_Body_Mesh
+    4300006: REF_Horse_Hair_Mesh
+    4300008: REF_Horse_Body_Mesh_New
+    4300010: REF_Horse_Hair_Mesh_New
+    7400000: Horse_Walk
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: REF_HorseBody_Mesh
+    13700002: REF_HorseHair_Mesh
+    13700004: REF_Horse_Body_Mesh
+    13700006: REF_Horse_Hair_Mesh
+    13700008: REF_Horse_Body_Mesh_New
+    13700010: REF_Horse_Hair_Mesh_New
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 0
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 2
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Horse_Walk
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 28
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 1
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: REF_Horse
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horse_tail_grp
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horse_tail_grp/REF_horse_tail1
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horse_tail_grp/REF_horse_tail1/REF_horse_tail2
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horse_tail_grp/REF_horse_tail1/REF_horse_tail2/REF_horse_tail3
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horse_tail_grp/REF_horse_tail1/REF_horse_tail2/REF_horse_tail3/REF_horse_tail4
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horse_tail_grp/REF_horse_tail1/REF_horse_tail2/REF_horse_tail3/REF_horse_tail4/REF_horse_tail5
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horse_tail_grp/REF_horse_tail1/REF_horse_tail2/REF_horse_tail3/REF_horse_tail4/REF_horse_tail5/REF_horse_tail6
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horse_tail_grp/REF_horse_tail1/REF_horse_tail2/REF_horse_tail3/REF_horse_tail4/REF_horse_tail5/REF_horse_tail6/REF_horse_tail7
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horselfemur
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horselfemur/REF_horseltibia
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horselfemur/REF_horseltibia/REF_horsellargecannon
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horselfemur/REF_horseltibia/REF_horsellargecannon/REF_horselphalanx
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horselfemur/REF_horseltibia/REF_horsellargecannon/REF_horselphalanx/REF_horselrearhoof
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horserfemur
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horserfemur/REF_horsertibia
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horserfemur/REF_horsertibia/REF_horserlargecannon
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horserfemur/REF_horsertibia/REF_horserlargecannon/REF_horserphalanx
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horserfemur/REF_horsertibia/REF_horserlargecannon/REF_horserphalanx/REF_horserrearthoof
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horse_neck_grp
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horse_neck_grp/REF_horse_neck1
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horse_neck_grp/REF_horse_neck1/REF_horse_neck2
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horse_neck_grp/REF_horse_neck1/REF_horse_neck2/REF_horse_neck3
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horse_neck_grp/REF_horse_neck1/REF_horse_neck2/REF_horse_neck3/REF_horse_neck4
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horse_neck_grp/REF_horse_neck1/REF_horse_neck2/REF_horse_neck3/REF_horse_neck4/REF_horse_head
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horse_neck_grp/REF_horse_neck1/REF_horse_neck2/REF_horse_neck3/REF_horse_neck4/REF_horse_head/REF_horse_jaw
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horse_neck_grp/REF_horse_neck1/REF_horse_neck2/REF_horse_neck3/REF_horse_neck4/REF_horse_head/REF_horse_jaw/REF_horse_jaw1
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horse_neck_grp/REF_horse_neck1/REF_horse_neck2/REF_horse_neck3/REF_horse_neck4/REF_horse_head/REF_horse_l_ear1
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horse_neck_grp/REF_horse_neck1/REF_horse_neck2/REF_horse_neck3/REF_horse_neck4/REF_horse_head/REF_horse_l_ear1/REF_horse_l_ear2
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horse_neck_grp/REF_horse_neck1/REF_horse_neck2/REF_horse_neck3/REF_horse_neck4/REF_horse_head/REF_horse_r_ear1
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horse_neck_grp/REF_horse_neck1/REF_horse_neck2/REF_horse_neck3/REF_horse_neck4/REF_horse_head/REF_horse_r_ear1/REF_horse_r_ear2
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horselleg1
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horselleg1/REF_horselleg2
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horselleg1/REF_horselleg2/REF_horselleg3_helper
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horselleg1/REF_horselleg2/REF_horselleg3_helper/REF_horselleg3
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horselleg1/REF_horselleg2/REF_horselleg3_helper/REF_horselleg3/REF_horselleg4
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horselleg1/REF_horselleg2/REF_horselleg3_helper/REF_horselleg3/REF_horselleg4/REF_horsellegankle
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horselleg1/REF_horselleg2/REF_horselleg3_helper/REF_horselleg3/REF_horselleg4/REF_horsellegankle/REF_horselfronthoof
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horserleg1
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horserleg1/REF_horserleg2
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horserleg1/REF_horserleg2/REF_horserleg3_helper
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horserleg1/REF_horserleg2/REF_horserleg3_helper/REF_horserleg3
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horserleg1/REF_horserleg2/REF_horserleg3_helper/REF_horserleg3/REF_horserleg4
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horserleg1/REF_horserleg2/REF_horserleg3_helper/REF_horserleg3/REF_horserleg4/REF_horserlegankle
+        weight: 1
+      - path: REF_Horse/REF_Hors_Root/REF_horsepelvis/REF_horsespine1/REF_horsespine2_helper/REF_horsespine2/REF_horsespine3_helper/REF_horsespine3/REF_horseribcage/REF_horserleg1/REF_horserleg2/REF_horserleg3_helper/REF_horserleg3/REF_horserleg4/REF_horserlegankle/REF_horserfronthoof
+        weight: 1
+      - path: REF_HorseBody_Mesh
+        weight: 1
+      - path: REF_HorseHair_Mesh
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 0
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 60166
+  packageName: Horse Rigged, Animated and Textured
+  packageVersion: 5.0
+  assetPath: Assets/Horse/Animations/Horse_Walk.fbx
+  uploadId: 227374
