@@ -1,171 +1,457 @@
 fileFormatVersion: 2
 guid: 7d1eeaf274ad2b54d95a0f125647cc62
-timeCreated: 1459966001
-licenseType: Store
+AssetOrigin:
+  serializedVersion: 1
+  productId: 60166
+  packageName: Horse Rigged, Animated and Textured
+  packageVersion: 5.0
+  assetPath: Assets/Horse/Animations/Horse_Death.fbx
+  uploadId: 227374
 ModelImporter:
-  serializedVersion: 19
-  fileIDToRecycleName:
-    100000: //RootNode
-    100002: REF_Hors_Root
-    100004: REF_Horse
-    100006: REF_horse_head
-    100008: REF_horse_jaw
-    100010: REF_horse_jaw1
-    100012: REF_horse_l_ear1
-    100014: REF_horse_l_ear2
-    100016: REF_horse_neck1
-    100018: REF_horse_neck2
-    100020: REF_horse_neck3
-    100022: REF_horse_neck4
-    100024: REF_horse_neck_grp
-    100026: REF_horse_r_ear1
-    100028: REF_horse_r_ear2
-    100030: REF_horse_tail1
-    100032: REF_horse_tail2
-    100034: REF_horse_tail3
-    100036: REF_horse_tail4
-    100038: REF_horse_tail5
-    100040: REF_horse_tail6
-    100042: REF_horse_tail7
-    100044: REF_horse_tail_grp
-    100046: REF_HorseBody_Mesh
-    100048: REF_HorseHair_Mesh
-    100050: REF_horselfemur
-    100052: REF_horselfronthoof
-    100054: REF_horsellargecannon
-    100056: REF_horselleg1
-    100058: REF_horselleg2
-    100060: REF_horselleg3
-    100062: REF_horselleg3_helper
-    100064: REF_horselleg4
-    100066: REF_horsellegankle
-    100068: REF_horselphalanx
-    100070: REF_horselrearhoof
-    100072: REF_horseltibia
-    100074: REF_horsepelvis
-    100076: REF_horserfemur
-    100078: REF_horserfronthoof
-    100080: REF_horseribcage
-    100082: REF_horserlargecannon
-    100084: REF_horserleg1
-    100086: REF_horserleg2
-    100088: REF_horserleg3
-    100090: REF_horserleg3_helper
-    100092: REF_horserleg4
-    100094: REF_horserlegankle
-    100096: REF_horserphalanx
-    100098: REF_horserrearthoof
-    100100: REF_horsertibia
-    100102: REF_horsespine1
-    100104: REF_horsespine2
-    100106: REF_horsespine2_helper
-    100108: REF_horsespine3
-    100110: REF_horsespine3_helper
-    100112: REF_Horse_Body_Mesh
-    100114: REF_Horse_Hair_Mesh
-    100116: REF_Horse_Body_Mesh_New
-    100118: REF_Horse_Hair_Mesh_New
-    100120: REF_horsepelvis_new
-    400000: //RootNode
-    400002: REF_Hors_Root
-    400004: REF_Horse
-    400006: REF_horse_head
-    400008: REF_horse_jaw
-    400010: REF_horse_jaw1
-    400012: REF_horse_l_ear1
-    400014: REF_horse_l_ear2
-    400016: REF_horse_neck1
-    400018: REF_horse_neck2
-    400020: REF_horse_neck3
-    400022: REF_horse_neck4
-    400024: REF_horse_neck_grp
-    400026: REF_horse_r_ear1
-    400028: REF_horse_r_ear2
-    400030: REF_horse_tail1
-    400032: REF_horse_tail2
-    400034: REF_horse_tail3
-    400036: REF_horse_tail4
-    400038: REF_horse_tail5
-    400040: REF_horse_tail6
-    400042: REF_horse_tail7
-    400044: REF_horse_tail_grp
-    400046: REF_HorseBody_Mesh
-    400048: REF_HorseHair_Mesh
-    400050: REF_horselfemur
-    400052: REF_horselfronthoof
-    400054: REF_horsellargecannon
-    400056: REF_horselleg1
-    400058: REF_horselleg2
-    400060: REF_horselleg3
-    400062: REF_horselleg3_helper
-    400064: REF_horselleg4
-    400066: REF_horsellegankle
-    400068: REF_horselphalanx
-    400070: REF_horselrearhoof
-    400072: REF_horseltibia
-    400074: REF_horsepelvis
-    400076: REF_horserfemur
-    400078: REF_horserfronthoof
-    400080: REF_horseribcage
-    400082: REF_horserlargecannon
-    400084: REF_horserleg1
-    400086: REF_horserleg2
-    400088: REF_horserleg3
-    400090: REF_horserleg3_helper
-    400092: REF_horserleg4
-    400094: REF_horserlegankle
-    400096: REF_horserphalanx
-    400098: REF_horserrearthoof
-    400100: REF_horsertibia
-    400102: REF_horsespine1
-    400104: REF_horsespine2
-    400106: REF_horsespine2_helper
-    400108: REF_horsespine3
-    400110: REF_horsespine3_helper
-    400112: REF_Horse_Body_Mesh
-    400114: REF_Horse_Hair_Mesh
-    400116: REF_Horse_Body_Mesh_New
-    400118: REF_Horse_Hair_Mesh_New
-    400120: REF_horsepelvis_new
-    4300000: REF_HorseBody_Mesh
-    4300002: REF_HorseHair_Mesh
-    4300004: REF_Horse_Body_Mesh
-    4300006: REF_Horse_Hair_Mesh
-    4300008: REF_Horse_Body_Mesh_New
-    4300010: REF_Horse_Hair_Mesh_New
-    7400000: Horse_Death
-    9500000: //RootNode
-    11100000: //RootNode
-    13700000: REF_HorseBody_Mesh
-    13700002: REF_HorseHair_Mesh
-    13700004: REF_Horse_Body_Mesh
-    13700006: REF_Horse_Hair_Mesh
-    13700008: REF_Horse_Body_Mesh_New
-    13700010: REF_Horse_Hair_Mesh_New
+  serializedVersion: 24200
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: //RootNode
+  - first:
+      1: 100002
+    second: REF_Hors_Root
+  - first:
+      1: 100004
+    second: REF_Horse
+  - first:
+      1: 100006
+    second: REF_horse_head
+  - first:
+      1: 100008
+    second: REF_horse_jaw
+  - first:
+      1: 100010
+    second: REF_horse_jaw1
+  - first:
+      1: 100012
+    second: REF_horse_l_ear1
+  - first:
+      1: 100014
+    second: REF_horse_l_ear2
+  - first:
+      1: 100016
+    second: REF_horse_neck1
+  - first:
+      1: 100018
+    second: REF_horse_neck2
+  - first:
+      1: 100020
+    second: REF_horse_neck3
+  - first:
+      1: 100022
+    second: REF_horse_neck4
+  - first:
+      1: 100024
+    second: REF_horse_neck_grp
+  - first:
+      1: 100026
+    second: REF_horse_r_ear1
+  - first:
+      1: 100028
+    second: REF_horse_r_ear2
+  - first:
+      1: 100030
+    second: REF_horse_tail1
+  - first:
+      1: 100032
+    second: REF_horse_tail2
+  - first:
+      1: 100034
+    second: REF_horse_tail3
+  - first:
+      1: 100036
+    second: REF_horse_tail4
+  - first:
+      1: 100038
+    second: REF_horse_tail5
+  - first:
+      1: 100040
+    second: REF_horse_tail6
+  - first:
+      1: 100042
+    second: REF_horse_tail7
+  - first:
+      1: 100044
+    second: REF_horse_tail_grp
+  - first:
+      1: 100046
+    second: REF_HorseBody_Mesh
+  - first:
+      1: 100048
+    second: REF_HorseHair_Mesh
+  - first:
+      1: 100050
+    second: REF_horselfemur
+  - first:
+      1: 100052
+    second: REF_horselfronthoof
+  - first:
+      1: 100054
+    second: REF_horsellargecannon
+  - first:
+      1: 100056
+    second: REF_horselleg1
+  - first:
+      1: 100058
+    second: REF_horselleg2
+  - first:
+      1: 100060
+    second: REF_horselleg3
+  - first:
+      1: 100062
+    second: REF_horselleg3_helper
+  - first:
+      1: 100064
+    second: REF_horselleg4
+  - first:
+      1: 100066
+    second: REF_horsellegankle
+  - first:
+      1: 100068
+    second: REF_horselphalanx
+  - first:
+      1: 100070
+    second: REF_horselrearhoof
+  - first:
+      1: 100072
+    second: REF_horseltibia
+  - first:
+      1: 100074
+    second: REF_horsepelvis
+  - first:
+      1: 100076
+    second: REF_horserfemur
+  - first:
+      1: 100078
+    second: REF_horserfronthoof
+  - first:
+      1: 100080
+    second: REF_horseribcage
+  - first:
+      1: 100082
+    second: REF_horserlargecannon
+  - first:
+      1: 100084
+    second: REF_horserleg1
+  - first:
+      1: 100086
+    second: REF_horserleg2
+  - first:
+      1: 100088
+    second: REF_horserleg3
+  - first:
+      1: 100090
+    second: REF_horserleg3_helper
+  - first:
+      1: 100092
+    second: REF_horserleg4
+  - first:
+      1: 100094
+    second: REF_horserlegankle
+  - first:
+      1: 100096
+    second: REF_horserphalanx
+  - first:
+      1: 100098
+    second: REF_horserrearthoof
+  - first:
+      1: 100100
+    second: REF_horsertibia
+  - first:
+      1: 100102
+    second: REF_horsespine1
+  - first:
+      1: 100104
+    second: REF_horsespine2
+  - first:
+      1: 100106
+    second: REF_horsespine2_helper
+  - first:
+      1: 100108
+    second: REF_horsespine3
+  - first:
+      1: 100110
+    second: REF_horsespine3_helper
+  - first:
+      1: 100112
+    second: REF_Horse_Body_Mesh
+  - first:
+      1: 100114
+    second: REF_Horse_Hair_Mesh
+  - first:
+      1: 100116
+    second: REF_Horse_Body_Mesh_New
+  - first:
+      1: 100118
+    second: REF_Horse_Hair_Mesh_New
+  - first:
+      1: 100120
+    second: REF_horsepelvis_new
+  - first:
+      4: 400000
+    second: //RootNode
+  - first:
+      4: 400002
+    second: REF_Hors_Root
+  - first:
+      4: 400004
+    second: REF_Horse
+  - first:
+      4: 400006
+    second: REF_horse_head
+  - first:
+      4: 400008
+    second: REF_horse_jaw
+  - first:
+      4: 400010
+    second: REF_horse_jaw1
+  - first:
+      4: 400012
+    second: REF_horse_l_ear1
+  - first:
+      4: 400014
+    second: REF_horse_l_ear2
+  - first:
+      4: 400016
+    second: REF_horse_neck1
+  - first:
+      4: 400018
+    second: REF_horse_neck2
+  - first:
+      4: 400020
+    second: REF_horse_neck3
+  - first:
+      4: 400022
+    second: REF_horse_neck4
+  - first:
+      4: 400024
+    second: REF_horse_neck_grp
+  - first:
+      4: 400026
+    second: REF_horse_r_ear1
+  - first:
+      4: 400028
+    second: REF_horse_r_ear2
+  - first:
+      4: 400030
+    second: REF_horse_tail1
+  - first:
+      4: 400032
+    second: REF_horse_tail2
+  - first:
+      4: 400034
+    second: REF_horse_tail3
+  - first:
+      4: 400036
+    second: REF_horse_tail4
+  - first:
+      4: 400038
+    second: REF_horse_tail5
+  - first:
+      4: 400040
+    second: REF_horse_tail6
+  - first:
+      4: 400042
+    second: REF_horse_tail7
+  - first:
+      4: 400044
+    second: REF_horse_tail_grp
+  - first:
+      4: 400046
+    second: REF_HorseBody_Mesh
+  - first:
+      4: 400048
+    second: REF_HorseHair_Mesh
+  - first:
+      4: 400050
+    second: REF_horselfemur
+  - first:
+      4: 400052
+    second: REF_horselfronthoof
+  - first:
+      4: 400054
+    second: REF_horsellargecannon
+  - first:
+      4: 400056
+    second: REF_horselleg1
+  - first:
+      4: 400058
+    second: REF_horselleg2
+  - first:
+      4: 400060
+    second: REF_horselleg3
+  - first:
+      4: 400062
+    second: REF_horselleg3_helper
+  - first:
+      4: 400064
+    second: REF_horselleg4
+  - first:
+      4: 400066
+    second: REF_horsellegankle
+  - first:
+      4: 400068
+    second: REF_horselphalanx
+  - first:
+      4: 400070
+    second: REF_horselrearhoof
+  - first:
+      4: 400072
+    second: REF_horseltibia
+  - first:
+      4: 400074
+    second: REF_horsepelvis
+  - first:
+      4: 400076
+    second: REF_horserfemur
+  - first:
+      4: 400078
+    second: REF_horserfronthoof
+  - first:
+      4: 400080
+    second: REF_horseribcage
+  - first:
+      4: 400082
+    second: REF_horserlargecannon
+  - first:
+      4: 400084
+    second: REF_horserleg1
+  - first:
+      4: 400086
+    second: REF_horserleg2
+  - first:
+      4: 400088
+    second: REF_horserleg3
+  - first:
+      4: 400090
+    second: REF_horserleg3_helper
+  - first:
+      4: 400092
+    second: REF_horserleg4
+  - first:
+      4: 400094
+    second: REF_horserlegankle
+  - first:
+      4: 400096
+    second: REF_horserphalanx
+  - first:
+      4: 400098
+    second: REF_horserrearthoof
+  - first:
+      4: 400100
+    second: REF_horsertibia
+  - first:
+      4: 400102
+    second: REF_horsespine1
+  - first:
+      4: 400104
+    second: REF_horsespine2
+  - first:
+      4: 400106
+    second: REF_horsespine2_helper
+  - first:
+      4: 400108
+    second: REF_horsespine3
+  - first:
+      4: 400110
+    second: REF_horsespine3_helper
+  - first:
+      4: 400112
+    second: REF_Horse_Body_Mesh
+  - first:
+      4: 400114
+    second: REF_Horse_Hair_Mesh
+  - first:
+      4: 400116
+    second: REF_Horse_Body_Mesh_New
+  - first:
+      4: 400118
+    second: REF_Horse_Hair_Mesh_New
+  - first:
+      4: 400120
+    second: REF_horsepelvis_new
+  - first:
+      43: 4300000
+    second: REF_HorseBody_Mesh
+  - first:
+      43: 4300002
+    second: REF_HorseHair_Mesh
+  - first:
+      43: 4300004
+    second: REF_Horse_Body_Mesh
+  - first:
+      43: 4300006
+    second: REF_Horse_Hair_Mesh
+  - first:
+      43: 4300008
+    second: REF_Horse_Body_Mesh_New
+  - first:
+      43: 4300010
+    second: REF_Horse_Hair_Mesh_New
+  - first:
+      74: 7400000
+    second: Horse_Death
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      111: 11100000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: REF_HorseBody_Mesh
+  - first:
+      137: 13700002
+    second: REF_HorseHair_Mesh
+  - first:
+      137: 13700004
+    second: REF_Horse_Body_Mesh
+  - first:
+      137: 13700006
+    second: REF_Horse_Hair_Mesh
+  - first:
+      137: 13700008
+    second: REF_Horse_Body_Mesh_New
+  - first:
+      137: 13700010
+    second: REF_Horse_Hair_Mesh_New
+  externalObjects: {}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
-    animationCompression: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 2
     extraExposedTransformPaths: []
+    extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
       name: Horse_Death
       takeName: Take 001
+      internalID: 0
       firstFrame: 1
       lastFrame: 90
       wrapMode: 2
@@ -309,25 +595,52 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 0
+    importVisibility: 0
     importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 0
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
+    meshOptimizationFlags: 1
+    indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -337,19 +650,20 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 1
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
   humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 60166
-  packageName: Horse Rigged, Animated and Textured
-  packageVersion: 5.0
-  assetPath: Assets/Horse/Animations/Horse_Death.fbx
-  uploadId: 227374

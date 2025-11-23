@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Unity.Cinemachine;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
@@ -14,6 +15,23 @@ namespace StarterAssets
 #endif
     public class ThirdPersonController : MonoBehaviour
     {
+        [Header("Horse Mounting")]
+        [Tooltip("Should the character mount the horse at scene start?")]
+        public bool mountAtStart = false;
+
+        [Tooltip("The horse to mount (must have Horse component)")]
+        public Horse targetHorse;
+
+        [Header("Camera Settings")]
+        [Tooltip("The Cinemachine camera to switch targets when mounting")]
+        public CinemachineCamera virtualCamera;
+
+        [Tooltip("Player's camera follow target (child of player)")]
+        public Transform playerCameraTarget;
+
+        [Tooltip("Player's camera look-at target (child of player)")]
+        public Transform playerLookAtTarget;
+
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 2.0f;
@@ -116,6 +134,10 @@ namespace StarterAssets
         private const float _threshold = 0.01f;
 
         private bool _hasAnimator;
+        
+        // Mounting state
+        private bool _isMounted = false;
+        private Transform _originalParent;
 
         private bool IsCurrentDeviceMouse
         {
@@ -157,12 +179,22 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+
+            // Store original parent
+            _originalParent = transform.parent;
+
+            // Mount at start if enabled
+            if (mountAtStart && targetHorse != null)
+            {
+                MountHorse();
+            }
         }
 
         private void Update()
         {
             _hasAnimator = TryGetComponent(out _animator);
 
+            HandleMountInput();
             JumpAndGravity();
             GroundedCheck();
             Move();
@@ -221,6 +253,18 @@ namespace StarterAssets
 
         private void Move()
         {
+            // If mounted, don't process player movement
+            if (_isMounted)
+            {
+                // Sync animation with horse speed
+                if (targetHorse != null && _hasAnimator)
+                {
+                    _animator.SetFloat(_animIDSpeed, targetHorse.GetCurrentSpeed());
+                    _animator.SetFloat(_animIDMotionSpeed, 1f);
+                }
+                return;
+            }
+
             // Check if movement is allowed
             if (!CanMove)
             {
@@ -368,6 +412,26 @@ namespace StarterAssets
             }
         }
 
+        /// <summary>
+        /// Handle mount/dismount button input
+        /// </summary>
+        private void HandleMountInput()
+        {
+            if (_input.mount)
+            {
+                _input.mount = false; // Reset input
+
+                if (_isMounted)
+                {
+                    DismountHorse();
+                }
+                else if (targetHorse != null)
+                {
+                    MountHorse();
+                }
+            }
+        }
+
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
         {
             if (lfAngle < -360f) lfAngle += 360f;
@@ -425,6 +489,136 @@ namespace StarterAssets
             CanMove = true;
             CanJump = true;
             Debug.Log("Movement enabled");
+        }
+
+        /// <summary>
+        /// Mount the character onto the horse
+        /// </summary>
+        public void MountHorse()
+        {
+            if (targetHorse == null)
+            {
+                Debug.LogWarning("Cannot mount: No target horse assigned!");
+                return;
+            }
+
+            if (targetHorse.mountPoint == null)
+            {
+                Debug.LogWarning("Cannot mount: Horse has no mount point!");
+                return;
+            }
+
+            if (_isMounted)
+            {
+                Debug.LogWarning("Already mounted!");
+                return;
+            }
+
+            // Disable player controller and this script
+            if (_controller != null)
+            {
+                _controller.enabled = false;
+            }
+
+            // Keep PlayerInput enabled so StarterAssetsInputs continues to receive input
+            // The horse will read from the same StarterAssetsInputs component
+
+            // Disable this movement script
+            this.enabled = false;
+
+            // Enable horse controller with shared input
+            var horseController = targetHorse.GetController();
+            if (horseController != null)
+            {
+                horseController.EnableControl(_input);
+            }
+
+            // Switch Cinemachine camera targets to horse
+            if (virtualCamera != null && horseController != null)
+            {
+                if (horseController.horseCameraTarget != null)
+                {
+                    virtualCamera.Follow = horseController.horseCameraTarget;
+                }
+                if (horseController.horseLookAtTarget != null)
+                {
+                    virtualCamera.LookAt = horseController.horseLookAtTarget;
+                }
+            }
+
+            // Parent to horse mount point
+            transform.SetParent(targetHorse.mountPoint);
+            transform.localPosition = Vector3.zero;
+            transform.localRotation = Quaternion.identity;
+
+            _isMounted = true;
+            CanJump = false;
+
+            Debug.Log($"Mounted on horse: {targetHorse.name}");
+        }
+
+        /// <summary>
+        /// Dismount from the horse
+        /// </summary>
+        public void DismountHorse()
+        {
+            if (!_isMounted)
+            {
+                Debug.LogWarning("Not currently mounted!");
+                return;
+            }
+
+            // Disable horse controller
+            var horseController = targetHorse.GetController();
+            if (horseController != null)
+            {
+                horseController.DisableControl();
+            }
+
+            // Switch Cinemachine camera targets back to player
+            if (virtualCamera != null)
+            {
+                if (playerCameraTarget != null)
+                {
+                    virtualCamera.Follow = playerCameraTarget;
+                }
+                if (playerLookAtTarget != null)
+                {
+                    virtualCamera.LookAt = playerLookAtTarget;
+                }
+            }
+
+            // Unparent from horse
+            transform.SetParent(_originalParent);
+
+            // Re-enable player controller, input, and this script
+            if (_controller != null)
+            {
+                _controller.enabled = true;
+            }
+
+#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
+            if (_playerInput != null)
+            {
+                _playerInput.enabled = true;
+            }
+#endif
+
+            // Re-enable this movement script
+            this.enabled = true;
+
+            _isMounted = false;
+            CanJump = true;
+
+            Debug.Log("Dismounted from horse");
+        }
+
+        /// <summary>
+        /// Check if currently mounted
+        /// </summary>
+        public bool IsMounted()
+        {
+            return _isMounted;
         }
     }
 }
