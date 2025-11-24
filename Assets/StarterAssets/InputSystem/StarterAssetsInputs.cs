@@ -79,12 +79,23 @@ namespace StarterAssets
 
 		private void OnApplicationFocus(bool hasFocus)
 		{
+#if (UNITY_ANDROID || UNITY_IOS) && UNITY_EDITOR
+			// Don't lock cursor in editor when testing mobile controls
+			SetCursorState(false);
+#else
 			SetCursorState(cursorLocked);
+#endif
 		}
 
 		private void SetCursorState(bool newState)
 		{
+#if (UNITY_ANDROID || UNITY_IOS) && UNITY_EDITOR
+			// Keep cursor visible and unlocked in editor for mobile testing
+			Cursor.lockState = CursorLockMode.None;
+			Cursor.visible = true;
+#else
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
+#endif
 		}
 	}
 	

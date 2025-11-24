@@ -1,0 +1,11 @@
+{
+    "asset": "e42332f426b7fbb459ef30afbd0723ba",
+    "fileName": "019ab33c-5518-7b80-825b-6e2e81a99b10.pose.json",
+    "prompt": "sitting on horse",
+    "negativePrompt": "",
+    "model": "9e46c009-67d8-4254-a3a0-32e3168247ee",
+    "modelName": "Text to Motion",
+    "customSeed": 938742305,
+    "w3CTraceId": "f74677ef4d3562afa7000cc74ea14766",
+    "isTrimmed": false
+}

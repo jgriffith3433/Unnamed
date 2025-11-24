@@ -2,6 +2,9 @@ using UnityEngine;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
+#if (UNITY_ANDROID || UNITY_IOS) || UNITY_EDITOR
+using MobileControllerFramework;
+#endif
 
 namespace StarterAssets
 {
@@ -57,6 +60,16 @@ namespace StarterAssets
 
         [Tooltip("Horse's camera look-at target")]
         public Transform horseLookAtTarget;
+
+        [Header("Mobile Controls")]
+        [Tooltip("Use mobile controls instead of keyboard/gamepad")]
+        public bool useMobileControls = false;
+
+        [Tooltip("Mobile analog stick for movement")]
+        public Analog movementAnalog;
+
+        [Tooltip("Mobile analog stick for camera rotation")]
+        public Analog cameraAnalog;
 
         // Private variables
         private float _speed;
@@ -158,21 +171,38 @@ namespace StarterAssets
                 return;
             }
 
+            // Get input from mobile controls if on mobile platform
+            Vector2 moveInput = _input.move;
+#if (UNITY_ANDROID || UNITY_IOS) || UNITY_EDITOR
+            if (useMobileControls && movementAnalog != null)
+            {
+                moveInput = movementAnalog.GetStickPosition();
+                if (moveInput.sqrMagnitude > 0.01f)
+                {
+                    Debug.Log($"[Horse] Mobile Move Input: {moveInput}");
+                }
+            }
+            else if (useMobileControls)
+            {
+                Debug.LogWarning("[Horse] useMobileControls is true but movementAnalog is null!");
+            }
+#endif
+
             // Determine target speed based on sprint input
             // Walk = normal, Trot = when moving, Gallop = when sprinting
             float targetSpeed = WalkSpeed;
             
-            if (_input.move != Vector2.zero)
+            if (moveInput != Vector2.zero)
             {
                 targetSpeed = _input.sprint ? GallopSpeed : TrotSpeed;
             }
 
-            if (_input.move == Vector2.zero) targetSpeed = 0.0f;
+            if (moveInput == Vector2.zero) targetSpeed = 0.0f;
 
             float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
             float speedOffset = 0.1f;
-            float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
+            float inputMagnitude = _input.analogMovement ? moveInput.magnitude : 1f;
 
             if (currentHorizontalSpeed < targetSpeed - speedOffset ||
                 currentHorizontalSpeed > targetSpeed + speedOffset)
@@ -189,9 +219,9 @@ namespace StarterAssets
             _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
             if (_animationBlend < 0.01f) _animationBlend = 0f;
 
-            Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
+            Vector3 inputDirection = new Vector3(moveInput.x, 0.0f, moveInput.y).normalized;
 
-            if (_input.move != Vector2.zero)
+            if (moveInput != Vector2.zero)
             {
                 _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
                                   _mainCamera.transform.eulerAngles.y;

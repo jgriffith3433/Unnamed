@@ -3,6 +3,9 @@ using Unity.Cinemachine;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
+#if (UNITY_ANDROID || UNITY_IOS) || UNITY_EDITOR
+using MobileControllerFramework;
+#endif
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
  */
@@ -19,8 +22,6 @@ namespace StarterAssets
         [Tooltip("Should the character mount the horse at scene start?")]
         public bool mountAtStart = false;
 
-        [Tooltip("The horse to mount (must have Horse component)")]
-        public Horse targetHorse;
 
         [Header("Camera Settings")]
         [Tooltip("The Cinemachine camera to switch targets when mounting")]
@@ -31,6 +32,16 @@ namespace StarterAssets
 
         [Tooltip("Player's camera look-at target (child of player)")]
         public Transform playerLookAtTarget;
+
+        [Header("Mobile Controls")]
+        [Tooltip("Use mobile controls instead of keyboard/gamepad")]
+        public bool useMobileControls = false;
+
+        [Tooltip("Mobile analog stick for movement")]
+        public Analog movementAnalog;
+
+        [Tooltip("Mobile analog stick for camera rotation")]
+        public Analog cameraAnalog;
 
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
@@ -183,11 +194,11 @@ namespace StarterAssets
             // Store original parent
             _originalParent = transform.parent;
 
-            // Mount at start if enabled
-            if (mountAtStart && targetHorse != null)
-            {
-                MountHorse();
-            }
+            // // Mount at start if enabled
+            // if (mountAtStart && targetHorse != null)
+            // {
+            //     MountHorse();
+            // }
         }
 
         private void Update()
@@ -232,14 +243,32 @@ namespace StarterAssets
 
         private void CameraRotation()
         {
+            // Get look input
+            Vector2 lookInput = _input.look;
+
+#if (UNITY_ANDROID || UNITY_IOS) || UNITY_EDITOR
+            if (useMobileControls && cameraAnalog != null)
+            {
+                lookInput = cameraAnalog.GetStickPosition() * 200f; // Scale for camera sensitivity
+                if (lookInput.sqrMagnitude > 0.01f)
+                {
+                    Debug.Log($"[ThirdPerson] Mobile Look Input: {lookInput}");
+                }
+            }
+            else if (useMobileControls)
+            {
+                Debug.LogWarning("[ThirdPerson] useMobileControls is true but cameraAnalog is null!");
+            }
+#endif
+
             // if there is an input and camera position is not fixed
-            if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition)
+            if (lookInput.sqrMagnitude >= _threshold && !LockCameraPosition)
             {
                 //Don't multiply mouse input by Time.deltaTime;
                 float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 
-                _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier;
-                _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier;
+                _cinemachineTargetYaw += lookInput.x * deltaTimeMultiplier;
+                _cinemachineTargetPitch += lookInput.y * deltaTimeMultiplier;
             }
 
             // clamp our rotations so our values are limited 360 degrees
@@ -256,12 +285,12 @@ namespace StarterAssets
             // If mounted, don't process player movement
             if (_isMounted)
             {
-                // Sync animation with horse speed
-                if (targetHorse != null && _hasAnimator)
-                {
-                    _animator.SetFloat(_animIDSpeed, targetHorse.GetCurrentSpeed());
-                    _animator.SetFloat(_animIDMotionSpeed, 1f);
-                }
+                // // Sync animation with horse speed
+                // if (targetHorse != null && _hasAnimator)
+                // {
+                //     _animator.SetFloat(_animIDSpeed, targetHorse.GetCurrentSpeed());
+                //     _animator.SetFloat(_animIDMotionSpeed, 1f);
+                // }
                 return;
             }
 
@@ -277,6 +306,23 @@ namespace StarterAssets
                 return;
             }
 
+            // Get input from mobile controls if on mobile platform
+            Vector2 moveInput = _input.move;
+#if (UNITY_ANDROID || UNITY_IOS) || UNITY_EDITOR
+            if (useMobileControls && movementAnalog != null)
+            {
+                moveInput = movementAnalog.GetStickPosition();
+                if (moveInput.sqrMagnitude > 0.01f)
+                {
+                    Debug.Log($"[ThirdPerson] Mobile Move Input: {moveInput}");
+                }
+            }
+            else if (useMobileControls)
+            {
+                Debug.LogWarning("[ThirdPerson] useMobileControls is true but movementAnalog is null!");
+            }
+#endif
+
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
@@ -284,13 +330,13 @@ namespace StarterAssets
 
             // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is no input, set the target speed to 0
-            if (_input.move == Vector2.zero) targetSpeed = 0.0f;
+            if (moveInput == Vector2.zero) targetSpeed = 0.0f;
 
             // a reference to the players current horizontal velocity
             float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
             float speedOffset = 0.1f;
-            float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
+            float inputMagnitude = _input.analogMovement ? moveInput.magnitude : 1f;
 
             // accelerate or decelerate to target speed
             if (currentHorizontalSpeed < targetSpeed - speedOffset ||
@@ -313,11 +359,11 @@ namespace StarterAssets
             if (_animationBlend < 0.01f) _animationBlend = 0f;
 
             // normalise input direction
-            Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
+            Vector3 inputDirection = new Vector3(moveInput.x, 0.0f, moveInput.y).normalized;
 
             // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is a move input rotate player when the player is moving
-            if (_input.move != Vector2.zero)
+            if (moveInput != Vector2.zero)
             {
                 _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
                                   _mainCamera.transform.eulerAngles.y;
@@ -421,14 +467,14 @@ namespace StarterAssets
             {
                 _input.mount = false; // Reset input
 
-                if (_isMounted)
-                {
-                    DismountHorse();
-                }
-                else if (targetHorse != null)
-                {
-                    MountHorse();
-                }
+                // if (_isMounted)
+                // {
+                //     //DismountHorse();
+                // }
+                // else if (targetHorse != null)
+                // {
+                //     //MountHorse();
+                // }
             }
         }
 
@@ -491,127 +537,127 @@ namespace StarterAssets
             Debug.Log("Movement enabled");
         }
 
-        /// <summary>
-        /// Mount the character onto the horse
-        /// </summary>
-        public void MountHorse()
-        {
-            if (targetHorse == null)
-            {
-                Debug.LogWarning("Cannot mount: No target horse assigned!");
-                return;
-            }
+//         /// <summary>
+//         /// Mount the character onto the horse
+//         /// </summary>
+//         public void MountHorse()
+//         {
+//             if (targetHorse == null)
+//             {
+//                 Debug.LogWarning("Cannot mount: No target horse assigned!");
+//                 return;
+//             }
 
-            if (targetHorse.mountPoint == null)
-            {
-                Debug.LogWarning("Cannot mount: Horse has no mount point!");
-                return;
-            }
+//             if (targetHorse.mountPoint == null)
+//             {
+//                 Debug.LogWarning("Cannot mount: Horse has no mount point!");
+//                 return;
+//             }
 
-            if (_isMounted)
-            {
-                Debug.LogWarning("Already mounted!");
-                return;
-            }
+//             if (_isMounted)
+//             {
+//                 Debug.LogWarning("Already mounted!");
+//                 return;
+//             }
 
-            // Disable player controller and this script
-            if (_controller != null)
-            {
-                _controller.enabled = false;
-            }
+//             // Disable player controller and this script
+//             if (_controller != null)
+//             {
+//                 _controller.enabled = false;
+//             }
 
-            // Keep PlayerInput enabled so StarterAssetsInputs continues to receive input
-            // The horse will read from the same StarterAssetsInputs component
+//             // Keep PlayerInput enabled so StarterAssetsInputs continues to receive input
+//             // The horse will read from the same StarterAssetsInputs component
 
-            // Disable this movement script
-            this.enabled = false;
+//             // Disable this movement script
+//             this.enabled = false;
 
-            // Enable horse controller with shared input
-            var horseController = targetHorse.GetController();
-            if (horseController != null)
-            {
-                horseController.EnableControl(_input);
-            }
+//             // Enable horse controller with shared input
+//             // var horseController = targetHorse.GetController();
+//             // if (horseController != null)
+//             // {
+//             //     horseController.EnableControl(_input);
+//             // }
 
-            // Switch Cinemachine camera targets to horse
-            if (virtualCamera != null && horseController != null)
-            {
-                if (horseController.horseCameraTarget != null)
-                {
-                    virtualCamera.Follow = horseController.horseCameraTarget;
-                }
-                if (horseController.horseLookAtTarget != null)
-                {
-                    virtualCamera.LookAt = horseController.horseLookAtTarget;
-                }
-            }
+//             // // Switch Cinemachine camera targets to horse
+//             // if (virtualCamera != null && horseController != null)
+//             // {
+//             //     if (horseController.horseCameraTarget != null)
+//             //     {
+//             //         virtualCamera.Follow = horseController.horseCameraTarget;
+//             //     }
+//             //     if (horseController.horseLookAtTarget != null)
+//             //     {
+//             //         virtualCamera.LookAt = horseController.horseLookAtTarget;
+//             //     }
+//             // }
 
-            // Parent to horse mount point
-            transform.SetParent(targetHorse.mountPoint);
-            transform.localPosition = Vector3.zero;
-            transform.localRotation = Quaternion.identity;
+//             // Parent to horse mount point
+//             transform.SetParent(targetHorse.mountPoint);
+//             transform.localPosition = Vector3.zero;
+//             transform.localRotation = Quaternion.identity;
 
-            _isMounted = true;
-            CanJump = false;
+//             _isMounted = true;
+//             CanJump = false;
 
-            Debug.Log($"Mounted on horse: {targetHorse.name}");
-        }
+//             Debug.Log($"Mounted on horse: {targetHorse.name}");
+//         }
 
-        /// <summary>
-        /// Dismount from the horse
-        /// </summary>
-        public void DismountHorse()
-        {
-            if (!_isMounted)
-            {
-                Debug.LogWarning("Not currently mounted!");
-                return;
-            }
+//         /// <summary>
+//         /// Dismount from the horse
+//         /// </summary>
+//         public void DismountHorse()
+//         {
+//             if (!_isMounted)
+//             {
+//                 Debug.LogWarning("Not currently mounted!");
+//                 return;
+//             }
 
-            // Disable horse controller
-            var horseController = targetHorse.GetController();
-            if (horseController != null)
-            {
-                horseController.DisableControl();
-            }
+//             // Disable horse controller
+//             var horseController = targetHorse.GetController();
+//             if (horseController != null)
+//             {
+//                 horseController.DisableControl();
+//             }
 
-            // Switch Cinemachine camera targets back to player
-            if (virtualCamera != null)
-            {
-                if (playerCameraTarget != null)
-                {
-                    virtualCamera.Follow = playerCameraTarget;
-                }
-                if (playerLookAtTarget != null)
-                {
-                    virtualCamera.LookAt = playerLookAtTarget;
-                }
-            }
+//             // Switch Cinemachine camera targets back to player
+//             if (virtualCamera != null)
+//             {
+//                 if (playerCameraTarget != null)
+//                 {
+//                     virtualCamera.Follow = playerCameraTarget;
+//                 }
+//                 if (playerLookAtTarget != null)
+//                 {
+//                     virtualCamera.LookAt = playerLookAtTarget;
+//                 }
+//             }
 
-            // Unparent from horse
-            transform.SetParent(_originalParent);
+//             // Unparent from horse
+//             transform.SetParent(_originalParent);
 
-            // Re-enable player controller, input, and this script
-            if (_controller != null)
-            {
-                _controller.enabled = true;
-            }
+//             // Re-enable player controller, input, and this script
+//             if (_controller != null)
+//             {
+//                 _controller.enabled = true;
+//             }
 
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
-            if (_playerInput != null)
-            {
-                _playerInput.enabled = true;
-            }
-#endif
+// #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
+//             if (_playerInput != null)
+//             {
+//                 _playerInput.enabled = true;
+//             }
+// #endif
 
-            // Re-enable this movement script
-            this.enabled = true;
+//             // Re-enable this movement script
+//             this.enabled = true;
 
-            _isMounted = false;
-            CanJump = true;
+//             _isMounted = false;
+//             CanJump = true;
 
-            Debug.Log("Dismounted from horse");
-        }
+//             Debug.Log("Dismounted from horse");
+//         }
 
         /// <summary>
         /// Check if currently mounted
