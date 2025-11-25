@@ -23,7 +23,7 @@ public class PossessableCharacterController : MonoBehaviour, IPossessable
 
     [Header("Jumping")]
     [Tooltip("Whether the character can jump")]
-    public bool CanJump = true;
+    public bool CanJump = false;
 
     [Tooltip("The height the character can jump")]
     public float JumpHeight = 1.2f;
@@ -304,7 +304,6 @@ public class PossessableCharacterController : MonoBehaviour, IPossessable
 
             if (_hasAnimator)
             {
-                _animator.SetBool(_animIDJump, false);
                 _animator.SetBool(_animIDFreeFall, false);
             }
 
@@ -320,7 +319,7 @@ public class PossessableCharacterController : MonoBehaviour, IPossessable
 
                 if (_hasAnimator)
                 {
-                    _animator.SetBool(_animIDJump, true);
+                    _animator.SetTrigger(_animIDJump);
                 }
             }
 
@@ -346,7 +345,7 @@ public class PossessableCharacterController : MonoBehaviour, IPossessable
             }
         }
 
-        if (_verticalVelocity < _terminalVelocity)
+        if (_verticalVelocity > -_terminalVelocity)
         {
             _verticalVelocity += Gravity * Time.deltaTime;
         }

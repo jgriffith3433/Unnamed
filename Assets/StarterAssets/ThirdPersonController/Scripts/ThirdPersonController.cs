@@ -37,11 +37,11 @@ namespace StarterAssets
         [Tooltip("Use mobile controls instead of keyboard/gamepad")]
         public bool useMobileControls = false;
 
-        [Tooltip("Mobile analog stick for movement")]
-        public Analog movementAnalog;
+        // [Tooltip("Mobile analog stick for movement")]
+        // public Analog movementAnalog;
 
-        [Tooltip("Mobile analog stick for camera rotation")]
-        public Analog cameraAnalog;
+        // [Tooltip("Mobile analog stick for camera rotation")]
+        // public Analog cameraAnalog;
 
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
@@ -246,20 +246,20 @@ namespace StarterAssets
             // Get look input
             Vector2 lookInput = _input.look;
 
-#if (UNITY_ANDROID || UNITY_IOS) || UNITY_EDITOR
-            if (useMobileControls && cameraAnalog != null)
-            {
-                lookInput = cameraAnalog.GetStickPosition() * 200f; // Scale for camera sensitivity
-                if (lookInput.sqrMagnitude > 0.01f)
-                {
-                    Debug.Log($"[ThirdPerson] Mobile Look Input: {lookInput}");
-                }
-            }
-            else if (useMobileControls)
-            {
-                Debug.LogWarning("[ThirdPerson] useMobileControls is true but cameraAnalog is null!");
-            }
-#endif
+// #if (UNITY_ANDROID || UNITY_IOS) || UNITY_EDITOR
+//             if (useMobileControls && cameraAnalog != null)
+//             {
+//                 lookInput = cameraAnalog.GetStickPosition() * 200f; // Scale for camera sensitivity
+//                 if (lookInput.sqrMagnitude > 0.01f)
+//                 {
+//                     Debug.Log($"[ThirdPerson] Mobile Look Input: {lookInput}");
+//                 }
+//             }
+//             else if (useMobileControls)
+//             {
+//                 Debug.LogWarning("[ThirdPerson] useMobileControls is true but cameraAnalog is null!");
+//             }
+// #endif
 
             // if there is an input and camera position is not fixed
             if (lookInput.sqrMagnitude >= _threshold && !LockCameraPosition)
@@ -308,20 +308,20 @@ namespace StarterAssets
 
             // Get input from mobile controls if on mobile platform
             Vector2 moveInput = _input.move;
-#if (UNITY_ANDROID || UNITY_IOS) || UNITY_EDITOR
-            if (useMobileControls && movementAnalog != null)
-            {
-                moveInput = movementAnalog.GetStickPosition();
-                if (moveInput.sqrMagnitude > 0.01f)
-                {
-                    Debug.Log($"[ThirdPerson] Mobile Move Input: {moveInput}");
-                }
-            }
-            else if (useMobileControls)
-            {
-                Debug.LogWarning("[ThirdPerson] useMobileControls is true but movementAnalog is null!");
-            }
-#endif
+// #if (UNITY_ANDROID || UNITY_IOS) || UNITY_EDITOR
+//             if (useMobileControls && movementAnalog != null)
+//             {
+//                 moveInput = movementAnalog.GetStickPosition();
+//                 if (moveInput.sqrMagnitude > 0.01f)
+//                 {
+//                     Debug.Log($"[ThirdPerson] Mobile Move Input: {moveInput}");
+//                 }
+//             }
+//             else if (useMobileControls)
+//             {
+//                 Debug.LogWarning("[ThirdPerson] useMobileControls is true but movementAnalog is null!");
+//             }
+// #endif
 
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;

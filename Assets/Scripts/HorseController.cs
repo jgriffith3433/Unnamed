@@ -65,11 +65,11 @@ namespace StarterAssets
         [Tooltip("Use mobile controls instead of keyboard/gamepad")]
         public bool useMobileControls = false;
 
-        [Tooltip("Mobile analog stick for movement")]
-        public Analog movementAnalog;
+        // [Tooltip("Mobile analog stick for movement")]
+        // public Analog movementAnalog;
 
-        [Tooltip("Mobile analog stick for camera rotation")]
-        public Analog cameraAnalog;
+        // [Tooltip("Mobile analog stick for camera rotation")]
+        // public Analog cameraAnalog;
 
         // Private variables
         private float _speed;
@@ -173,20 +173,20 @@ namespace StarterAssets
 
             // Get input from mobile controls if on mobile platform
             Vector2 moveInput = _input.move;
-#if (UNITY_ANDROID || UNITY_IOS) || UNITY_EDITOR
-            if (useMobileControls && movementAnalog != null)
-            {
-                moveInput = movementAnalog.GetStickPosition();
-                if (moveInput.sqrMagnitude > 0.01f)
-                {
-                    Debug.Log($"[Horse] Mobile Move Input: {moveInput}");
-                }
-            }
-            else if (useMobileControls)
-            {
-                Debug.LogWarning("[Horse] useMobileControls is true but movementAnalog is null!");
-            }
-#endif
+// #if (UNITY_ANDROID || UNITY_IOS) || UNITY_EDITOR
+//             if (useMobileControls && movementAnalog != null)
+//             {
+//                 moveInput = movementAnalog.GetStickPosition();
+//                 if (moveInput.sqrMagnitude > 0.01f)
+//                 {
+//                     Debug.Log($"[Horse] Mobile Move Input: {moveInput}");
+//                 }
+//             }
+//             else if (useMobileControls)
+//             {
+//                 Debug.LogWarning("[Horse] useMobileControls is true but movementAnalog is null!");
+//             }
+// #endif
 
             // Determine target speed based on sprint input
             // Walk = normal, Trot = when moving, Gallop = when sprinting

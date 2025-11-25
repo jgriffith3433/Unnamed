@@ -10,6 +10,10 @@ public class MountSystem : MonoBehaviour
     [Tooltip("Trigger collider for detecting nearby mountables")]
     public Collider detectionTrigger;
 
+    [Header("UI")]
+    [Tooltip("UI GameObject to show when mounting is available")]
+    public GameObject mountPromptUI;
+
     private Player _player;
     private IPossessable _thisPossessable;
     private IPossessable _nearbyMountable;
@@ -43,6 +47,9 @@ public class MountSystem : MonoBehaviour
         {
             detectionTrigger.enabled = true;
         }
+
+        // Hide UI initially
+        UpdateMountUI();
     }
 
     private void OnDisable()
@@ -61,6 +68,9 @@ public class MountSystem : MonoBehaviour
 
         // Clear nearby mountable
         _nearbyMountable = null;
+
+        // Hide UI
+        UpdateMountUI();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -69,6 +79,7 @@ public class MountSystem : MonoBehaviour
         if (IsValidMountTarget(possessable))
         {
             _nearbyMountable = possessable;
+            UpdateMountUI();
         }
     }
 
@@ -78,6 +89,7 @@ public class MountSystem : MonoBehaviour
         if (possessable == _nearbyMountable)
         {
             _nearbyMountable = null;
+            UpdateMountUI();
         }
     }
 
@@ -128,5 +140,16 @@ public class MountSystem : MonoBehaviour
     private void Mount(IPossessable target)
     {
         _player.Possess(target);
+    }
+
+    private void UpdateMountUI()
+    {
+        if (mountPromptUI == null) return;
+
+        // Show UI when we can mount (nearby mountable exists) or dismount (on a horse)
+        bool canMount = _nearbyMountable != null;
+        bool canDismount = ShouldDismount() && IsCurrentlyPossessed();
+        
+        mountPromptUI.SetActive(canMount || canDismount);
     }
 }

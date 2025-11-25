@@ -1,7 +1,15 @@
 fileFormatVersion: 2
 guid: 423afdfddf1a27041a8be2f6614d9d7c
+AssetOrigin:
+  serializedVersion: 1
+  productId: 79902
+  packageName: Horse Animset Pro (Riding System)
+  packageVersion: 4.5.0b
+  assetPath: Assets/Malbers Animations/Horse AnimSet Pro/2 - Animations/Animations
+    Clips/Horse/H_Jump_Gallop.FBX
+  uploadId: 795844
 ModelImporter:
-  serializedVersion: 22200
+  serializedVersion: 24200
   internalIDToNameTable:
   - first:
       1: 100000
@@ -262,8 +270,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: Root
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -333,6 +339,9 @@ ModelImporter:
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
     optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
     meshOptimizationFlags: 1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
@@ -370,8 +379,7 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 9c2f1ed66b991284c9491f8fd53b213e,
-    type: 3}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 9c2f1ed66b991284c9491f8fd53b213e, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
@@ -383,11 +391,3 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 79902
-  packageName: Horse Animset Pro (Riding System)
-  packageVersion: 4.5.0b
-  assetPath: Assets/Malbers Animations/Horse AnimSet Pro/2 - Animations/Animations
-    Clips/Horse/H_Jump_Gallop.FBX
-  uploadId: 795844
