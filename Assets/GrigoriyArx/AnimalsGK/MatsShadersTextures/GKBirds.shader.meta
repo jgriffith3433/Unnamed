@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: b13032ebc433bb747b9c919e847fe453
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 286690
+  packageName: Farm Birds Families
+  packageVersion: 1.0
+  assetPath: Assets/GrigoriyArx/AnimalsGK/MatsShadersTextures/GKBirds.shader
+  uploadId: 671514

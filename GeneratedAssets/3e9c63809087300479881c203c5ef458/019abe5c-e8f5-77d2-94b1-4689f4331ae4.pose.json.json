@@ -1,0 +1,11 @@
+{
+    "asset": "ddf9fc6d46107594bb3633d5f8caf0bf",
+    "fileName": "019abe5c-e8f5-77d2-94b1-4689f4331ae4.pose.json",
+    "prompt": "sitting and kicking feet",
+    "negativePrompt": "",
+    "model": "9e46c009-67d8-4254-a3a0-32e3168247ee",
+    "modelName": "Text to Motion",
+    "customSeed": 1969688945,
+    "w3CTraceId": "0a123423dcc6c5c076eaee589675c1b1",
+    "isTrimmed": false
+}

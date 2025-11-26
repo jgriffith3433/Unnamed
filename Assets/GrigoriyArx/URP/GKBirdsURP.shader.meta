@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 6751833c81c4ed44192f09552295957e
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 286690
+  packageName: Farm Birds Families
+  packageVersion: 1.0
+  assetPath: Assets/GrigoriyArx/URP/GKBirdsURP.shader
+  uploadId: 671514

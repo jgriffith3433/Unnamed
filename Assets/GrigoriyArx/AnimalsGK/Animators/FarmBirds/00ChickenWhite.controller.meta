@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e5d024f98da7ff241822e23fbb109df7
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 286690
+  packageName: Farm Birds Families
+  packageVersion: 1.0
+  assetPath: Assets/GrigoriyArx/AnimalsGK/Animators/FarmBirds/00ChickenWhite.controller
+  uploadId: 671514

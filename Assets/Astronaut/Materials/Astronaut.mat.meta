@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ed0ca5945a7b9dd4a8f49f75fe4bdeb1
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 188393
+  packageName: Astronaut
+  packageVersion: 1.0
+  assetPath: Assets/Astronaut/Materials/Astronaut.mat
+  uploadId: 415199

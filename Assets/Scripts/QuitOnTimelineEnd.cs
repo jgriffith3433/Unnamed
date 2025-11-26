@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using UnityEngine.Playables;
 
 public class QuitOnTimelineEnd : MonoBehaviour
@@ -23,6 +24,14 @@ public class QuitOnTimelineEnd : MonoBehaviour
 
     private void OnPlayableDirectorStopped(PlayableDirector director)
     {
+        playableDirector.gameObject.SetActive(false);
+        StartCoroutine(DeactivateAfterTime(3f));
+    }
+
+    private IEnumerator DeactivateAfterTime(float t)
+    {
+        yield return new WaitForSeconds(t);
+        
         Debug.Log("Timeline ended. Quitting application...");
         Application.Quit();
 

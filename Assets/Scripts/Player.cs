@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     public CinemachineCamera virtualCamera;
 
     [Header("Initial Setup")]
-    public PossessableCharacterController initialController;
+    public PossessableTurkeyController initialController;
     public bool possessInitialControllerOnStart = true;
 
     private IPossessable _currentController;
