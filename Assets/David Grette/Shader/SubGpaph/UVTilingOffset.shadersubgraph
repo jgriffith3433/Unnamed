@@ -314,7 +314,7 @@
 }
 
 {
-    "m_SGVersion": 0,
+    "m_SGVersion": 1,
     "m_Type": "UnityEditor.ShaderGraph.SwizzleNode",
     "m_ObjectId": "787425d63bc82489a270e4a17ed73e05",
     "m_Group": {
@@ -346,10 +346,8 @@
     "m_CustomColors": {
         "m_SerializableColors": []
     },
-    "m_RedChannel": 2,
-    "m_GreenChannel": 3,
-    "m_BlueChannel": 3,
-    "m_AlphaChannel": 3
+    "_maskInput": "baaa",
+    "convertedMask": "zwww"
 }
 
 {

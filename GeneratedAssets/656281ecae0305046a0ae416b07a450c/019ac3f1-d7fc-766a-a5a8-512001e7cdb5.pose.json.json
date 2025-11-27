@@ -1,0 +1,11 @@
+{
+    "asset": "656281ecae0305046a0ae416b07a450c",
+    "fileName": "019ac3f1-d7fc-766a-a5a8-512001e7cdb5.pose.json",
+    "prompt": "Touching button",
+    "negativePrompt": "",
+    "model": "9e46c009-67d8-4254-a3a0-32e3168247ee",
+    "modelName": "Text to Motion",
+    "customSeed": 1813319638,
+    "w3CTraceId": "6e107ddbdd4f5ce6d31eea0eee484b8a",
+    "isTrimmed": false
+}

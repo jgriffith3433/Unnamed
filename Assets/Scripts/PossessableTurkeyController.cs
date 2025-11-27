@@ -105,8 +105,6 @@ public class PossessableTurkeyController : MonoBehaviour, IPossessable
     private int _animIDSpeed;
     private int _animIDGrounded;
     private int _animIDJump;
-    private int _animIDFreeFall;
-    private int _animIDMotionSpeed;
     private int _animIDFlying;
 
     private void Awake()
@@ -144,8 +142,6 @@ public class PossessableTurkeyController : MonoBehaviour, IPossessable
         _animIDSpeed = Animator.StringToHash("Speed");
         _animIDGrounded = Animator.StringToHash("Grounded");
         _animIDJump = Animator.StringToHash("Jump");
-        _animIDFreeFall = Animator.StringToHash("FreeFall");
-        _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
         _animIDFlying = Animator.StringToHash("Flying");
     }
 
@@ -337,7 +333,6 @@ public class PossessableTurkeyController : MonoBehaviour, IPossessable
         if (_hasAnimator)
         {
             _animator.SetFloat(_animIDSpeed, _animationBlend);
-            _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
         }
     }
 
@@ -355,7 +350,6 @@ public class PossessableTurkeyController : MonoBehaviour, IPossessable
             if (_hasAnimator)
             {
                 _animator.SetBool(_animIDFlying, false);
-                _animator.SetBool(_animIDFreeFall, false);
             }
 
             if (_verticalVelocity < 0.0f)
@@ -406,7 +400,6 @@ public class PossessableTurkeyController : MonoBehaviour, IPossessable
                 if (_hasAnimator)
                 {
                     _animator.SetBool(_animIDFlying, true);
-                    _animator.SetBool(_animIDFreeFall, false);
                 }
             }
             else
@@ -427,7 +420,6 @@ public class PossessableTurkeyController : MonoBehaviour, IPossessable
                 {
                     if (_hasAnimator)
                     {
-                        _animator.SetBool(_animIDFreeFall, true);
                         _animator.SetBool(_animIDFlying, false);
                     }
                 }
