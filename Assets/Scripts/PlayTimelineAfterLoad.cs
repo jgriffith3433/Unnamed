@@ -13,6 +13,10 @@ public class PlayTimelineAfterLoad : MonoBehaviour
     [SerializeField] private PlayableDirector playableDirector;
     [SerializeField] private bool showLoadingProgress = true;
     
+#if UNITY_EDITOR
+    [SerializeField] private double startTime = 0.0;
+#endif
+    
     private int totalFramesToLoad = 0;
     private int framesLoaded = 0;
     private bool isLoading = false;
@@ -76,6 +80,9 @@ public class PlayTimelineAfterLoad : MonoBehaviour
         DisableAllVideoPlayers();
 
         // Start timeline playback
+#if UNITY_EDITOR
+        playableDirector.time = startTime;
+#endif
         playableDirector.Play();
         isLoading = false;
     }
@@ -179,4 +186,21 @@ public class PlayTimelineAfterLoad : MonoBehaviour
     // Public methods for external control
     public bool IsLoading => isLoading;
     public float LoadProgress => totalFramesToLoad > 0 ? (float)framesLoaded / totalFramesToLoad : 0f;
+
+#if UNITY_EDITOR
+    [ContextMenu("Sample Current Timeline Time")]
+    private void SampleCurrentTimelineTime()
+    {
+        if (playableDirector != null)
+        {
+            startTime = playableDirector.time;
+            Debug.Log($"[PlayTimelineAfterLoad] Sampled timeline time: {startTime:F3} seconds");
+            UnityEditor.EditorUtility.SetDirty(this);
+        }
+        else
+        {
+            Debug.LogWarning("[PlayTimelineAfterLoad] No PlayableDirector assigned!");
+        }
+    }
+#endif
 }
