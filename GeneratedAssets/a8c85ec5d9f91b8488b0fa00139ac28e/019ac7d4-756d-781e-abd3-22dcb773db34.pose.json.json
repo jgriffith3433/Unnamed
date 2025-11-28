@@ -1,0 +1,11 @@
+{
+    "asset": "a8c85ec5d9f91b8488b0fa00139ac28e",
+    "fileName": "019ac7d4-756d-781e-abd3-22dcb773db34.pose.json",
+    "prompt": "Sitting at tractor",
+    "negativePrompt": "",
+    "model": "9e46c009-67d8-4254-a3a0-32e3168247ee",
+    "modelName": "Text to Motion",
+    "customSeed": 371837762,
+    "w3CTraceId": "1fb58f5d7c97b9965d95583f8a743867",
+    "isTrimmed": false
+}

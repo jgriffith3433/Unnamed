@@ -1,0 +1,11 @@
+{
+    "asset": "a8c85ec5d9f91b8488b0fa00139ac28e",
+    "fileName": "019ac7d4-0046-7193-9060-e13ef6a0be6f.pose.json",
+    "prompt": "Controlling tractor",
+    "negativePrompt": "",
+    "model": "9e46c009-67d8-4254-a3a0-32e3168247ee",
+    "modelName": "Text to Motion",
+    "customSeed": 693128839,
+    "w3CTraceId": "bc88307b5adda6de472274a182ac1723",
+    "isTrimmed": false
+}

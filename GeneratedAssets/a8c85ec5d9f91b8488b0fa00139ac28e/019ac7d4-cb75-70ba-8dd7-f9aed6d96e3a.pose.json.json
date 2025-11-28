@@ -1,0 +1,11 @@
+{
+    "asset": "a8c85ec5d9f91b8488b0fa00139ac28e",
+    "fileName": "019ac7d4-cb75-70ba-8dd7-f9aed6d96e3a.pose.json",
+    "prompt": "Sitting controlling to joysticks",
+    "negativePrompt": "",
+    "model": "9e46c009-67d8-4254-a3a0-32e3168247ee",
+    "modelName": "Text to Motion",
+    "customSeed": 1637876122,
+    "w3CTraceId": "6fa58fe93623d872748ea4b36375ae09",
+    "isTrimmed": false
+}
