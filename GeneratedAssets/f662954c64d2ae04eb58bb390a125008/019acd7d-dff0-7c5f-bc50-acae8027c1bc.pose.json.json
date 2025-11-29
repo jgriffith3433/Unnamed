@@ -1,0 +1,11 @@
+{
+    "asset": "f662954c64d2ae04eb58bb390a125008",
+    "fileName": "019acd7d-dff0-7c5f-bc50-acae8027c1bc.pose.json",
+    "prompt": "walking like a monster",
+    "negativePrompt": "",
+    "model": "9e46c009-67d8-4254-a3a0-32e3168247ee",
+    "modelName": "Text to Motion",
+    "customSeed": 420789848,
+    "w3CTraceId": "3d6971ec8d5e11fe907c1307e7df092c",
+    "isTrimmed": false
+}

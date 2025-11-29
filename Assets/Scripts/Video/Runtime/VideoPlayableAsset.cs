@@ -59,7 +59,24 @@ public class VideoPlayableAsset : PlayableAsset, ITimelineClipAsset
         behaviour.videoPlayer = videoPlayer.Resolve(graph.GetResolver());
         behaviour.preloadedFrames = preloadedFrames;
         behaviour.previewFPS = previewFPS;
-        behaviour.boundGameObject = owner;
+        
+        // Get the actual bound GameObject from the track, not the timeline owner
+        behaviour.boundGameObject = null;
+        if (cachedDirector != null)
+        {
+            // Try to get the VideoPlayer's GameObject which should be bound to the track
+            var vp = behaviour.videoPlayer;
+            if (vp != null)
+            {
+                behaviour.boundGameObject = vp.gameObject;
+            }
+        }
+        
+        // Fallback to owner if we couldn't find the bound object
+        if (behaviour.boundGameObject == null)
+        {
+            behaviour.boundGameObject = owner;
+        }
         
         // Pass video clip path for cache lookup
         behaviour.videoClipPath = cachedVideoClipPath;

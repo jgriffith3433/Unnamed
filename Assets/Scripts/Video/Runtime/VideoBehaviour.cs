@@ -13,6 +13,7 @@ public class VideoBehaviour : PlayableBehaviour
 
     private RawImage targetRawImage;
     private int lastFrameIndex = -1;
+    private Texture2D lastSetTexture = null;
 
     public override void OnGraphStart(Playable playable)
     {
@@ -45,8 +46,13 @@ public class VideoBehaviour : PlayableBehaviour
         // Calculate frame index from timeline time
         int frameIndex = Mathf.FloorToInt((float)time * previewFPS);
         
-        // Always update if frame changed OR if we don't have a frame displayed yet
-        if (frameIndex != lastFrameIndex || targetRawImage.texture == null)
+        // Check if the RawImage texture has been changed externally or we need to update
+        bool textureChangedExternally = targetRawImage.texture != lastSetTexture;
+        bool frameChanged = frameIndex != lastFrameIndex;
+        bool noTexture = targetRawImage.texture == null;
+        
+        // Always update if frame changed, no texture, or texture was changed externally
+        if (frameChanged || noTexture || textureChangedExternally)
         {
             Texture2D frameTexture = null;
 
@@ -67,6 +73,7 @@ public class VideoBehaviour : PlayableBehaviour
             {
                 targetRawImage.texture = frameTexture;
                 lastFrameIndex = frameIndex;
+                lastSetTexture = frameTexture;
             }
         }
     }
