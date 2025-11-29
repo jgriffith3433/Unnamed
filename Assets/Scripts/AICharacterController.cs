@@ -1,34 +1,35 @@
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 public class AICharacterController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Transform player;
+    [SerializeField] private Animator animator;
+    [SerializeField] private PlayableDirector playableDirector;
+    [SerializeField] private GameObject failedToPressButton;
+    [SerializeField] private GameObject failedToPressButtonDeactivate;
+    [SerializeField] private PossessableFirstPersonController playerController;
     
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 3.5f;
-    [SerializeField] private float rotationSpeed = 8f;
+    [SerializeField] private float attackDistance = 2f;
+    [SerializeField] private float attackStopDistance = 0.5f;
     
     [Header("Path Tracking")]
     [SerializeField] private float recordInterval = 0.25f;
     [SerializeField] private float minPointDistance = 1.2f;
     [SerializeField] private float reachDistance = 2f;
+    [SerializeField] private float navMeshSampleDistance = 5f;
     
-    [Header("Obstacle Avoidance")]
-    [SerializeField] private float obstacleCheckDistance = 2.5f;
-    [SerializeField] private float sideCheckDistance = 1.5f;
-    [SerializeField] private LayerMask obstacleLayer = -1;
-    [SerializeField] private int avoidanceRayCount = 5;
-    
-    [Header("Gravity")]
-    [SerializeField] private float gravity = -20f;
-    
-    private CharacterController controller;
-    private List<Vector3> path = new List<Vector3>();
+    private NavMeshAgent navAgent;
+    private List<Vector3> playerPath = new List<Vector3>();
     private int targetWaypointIndex = 0;
     private float recordTimer = 0f;
-    private Vector3 verticalVelocity;
+    private bool hasAttacked = false;
     
     // Stuck detection
     private Vector3 positionLastFrame;
@@ -36,15 +37,23 @@ public class AICharacterController : MonoBehaviour
     private const float STUCK_TIME_THRESHOLD = 2f;
     private const float MOVEMENT_THRESHOLD = 0.15f;
 
+    void OnEnable()
+    {
+        // Set checkpoint when AI is enabled
+        PlayerPrefs.SetInt("startFight", 1);
+        PlayerPrefs.Save();
+    }
+
     void Start()
     {
-        controller = GetComponent<CharacterController>();
+        navAgent = GetComponent<NavMeshAgent>();
         
-        if (controller != null)
+        if (navAgent != null)
         {
-            controller.minMoveDistance = 0f;
-            controller.stepOffset = 0.4f;
-            controller.slopeLimit = 50f;
+            navAgent.speed = moveSpeed;
+            navAgent.acceleration = 8f;
+            navAgent.angularSpeed = 120f;
+            navAgent.stoppingDistance = 1f;
         }
         
         if (player == null)
@@ -61,12 +70,120 @@ public class AICharacterController : MonoBehaviour
 
     void Update()
     {
-        if (player == null || controller == null) return;
+        if (player == null || navAgent == null) return;
         
-        RecordPlayerPosition();
-        UpdateTarget();
-        Move();
-        ApplyGravity();
+        // Check if close enough to attack
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        
+        if (distanceToPlayer <= attackDistance && !hasAttacked)
+        {
+            TriggerAttack();
+        }
+        
+        // If attacking, maintain optimal distance from player
+        if (hasAttacked)
+        {
+            if (distanceToPlayer > attackStopDistance)
+            {
+                // Keep moving closer to reach optimal distance
+                Vector3 targetPosition = player.position;
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(targetPosition, out hit, navMeshSampleDistance, NavMesh.AllAreas))
+                {
+                    navAgent.SetDestination(hit.position);
+                }
+            }
+            else
+            {
+                // Stop when at optimal distance
+                navAgent.isStopped = true;
+            }
+        }
+        else
+        {
+            RecordPlayerPosition();
+            UpdateTarget();
+            CheckIfStuck();
+        }
+    }
+    
+    void TriggerAttack()
+    {
+        hasAttacked = true;
+        
+        // Trigger attack animation
+        if (animator != null)
+        {
+            animator.SetTrigger("Attack");
+        }
+        
+        // Pause the playable director
+        if (playableDirector != null)
+        {
+            playableDirector.Pause();
+        }
+
+        if (failedToPressButton != null)
+        {
+            failedToPressButton.SetActive(true);
+        }
+
+        if (failedToPressButtonDeactivate != null)
+        {
+            failedToPressButtonDeactivate.SetActive(false);
+        }
+        
+        // Disable player movement and force camera to look at AI
+        if (playerController != null)
+        {
+            playerController.enabled = false;
+            StartCoroutine(LookAtAI());
+        }
+        
+        // Start coroutine to reload scene after attack
+        StartCoroutine(ReloadSceneAfterAttack());
+    }
+    
+    System.Collections.IEnumerator ReloadSceneAfterAttack()
+    {
+        yield return new WaitForSeconds(4f);
+        
+        // Reload the current scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    
+    System.Collections.IEnumerator LookAtAI()
+    {
+        if (playerController == null || player == null) yield break;
+        
+        // Get the player's camera transform
+        Transform playerCamera = playerController.transform;
+        if (playerController.GetComponentInChildren<Camera>() != null)
+        {
+            playerCamera = playerController.GetComponentInChildren<Camera>().transform;
+        }
+        
+        // Smoothly rotate camera to look at AI
+        float rotationSpeed = 3f;
+        float elapsedTime = 0f;
+        float duration = 0.5f;
+        
+        Quaternion startRotation = playerCamera.rotation;
+        
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            
+            // Calculate look direction - aim 1 unit higher to see the head
+            Vector3 targetPoint = transform.position + Vector3.up * 1f;
+            Vector3 directionToAI = (targetPoint - playerCamera.position).normalized;
+            Quaternion targetRotation = Quaternion.LookRotation(directionToAI);
+            
+            // Smoothly rotate
+            playerCamera.rotation = Quaternion.Slerp(startRotation, targetRotation, elapsedTime / duration);
+            
+            yield return null;
+        }
     }
     
     void RecordPlayerPosition()
@@ -78,15 +195,15 @@ public class AICharacterController : MonoBehaviour
             recordTimer = 0f;
             
             // Add point if it's far enough from the last one
-            if (path.Count == 0 || Vector3.Distance(player.position, path[path.Count - 1]) >= minPointDistance)
+            if (playerPath.Count == 0 || Vector3.Distance(player.position, playerPath[playerPath.Count - 1]) >= minPointDistance)
             {
-                path.Add(player.position);
+                playerPath.Add(player.position);
                 
                 // Limit path size
-                if (path.Count > 500)
+                if (playerPath.Count > 500)
                 {
                     int removeCount = 100;
-                    path.RemoveRange(0, removeCount);
+                    playerPath.RemoveRange(0, removeCount);
                     targetWaypointIndex = Mathf.Max(0, targetWaypointIndex - removeCount);
                 }
             }
@@ -96,9 +213,9 @@ public class AICharacterController : MonoBehaviour
     void UpdateTarget()
     {
         // Clean up reached waypoints
-        while (targetWaypointIndex < path.Count)
+        while (targetWaypointIndex < playerPath.Count)
         {
-            float distanceToWaypoint = Vector3.Distance(transform.position, path[targetWaypointIndex]);
+            float distanceToWaypoint = Vector3.Distance(transform.position, playerPath[targetWaypointIndex]);
             
             if (distanceToWaypoint <= reachDistance)
             {
@@ -110,7 +227,34 @@ public class AICharacterController : MonoBehaviour
             }
         }
         
-        // Check if stuck
+        // Determine target position
+        Vector3 targetPosition;
+        
+        if (targetWaypointIndex < playerPath.Count)
+        {
+            targetPosition = playerPath[targetWaypointIndex];
+        }
+        else
+        {
+            targetPosition = player.position;
+        }
+        
+        // Sample the position onto the NavMesh
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(targetPosition, out hit, navMeshSampleDistance, NavMesh.AllAreas))
+        {
+            // Set the destination on the NavMesh
+            navAgent.SetDestination(hit.position);
+        }
+        else
+        {
+            // Fallback to direct position if not on NavMesh
+            navAgent.SetDestination(targetPosition);
+        }
+    }
+    
+    void CheckIfStuck()
+    {
         float distanceMoved = Vector3.Distance(transform.position, positionLastFrame);
         positionLastFrame = transform.position;
         
@@ -132,203 +276,38 @@ public class AICharacterController : MonoBehaviour
     
     void HandleStuck()
     {
-        // When stuck, check if we're trying to reach a waypoint at a different height
-        if (targetWaypointIndex < path.Count)
-        {
-            float heightDiff = Mathf.Abs(path[targetWaypointIndex].y - transform.position.y);
-            
-            // If waypoint is much higher/lower, we might be at the wrong floor
-            // Skip ahead to find a waypoint at our current height
-            if (heightDiff > 1f)
-            {
-                int searchIndex = targetWaypointIndex + 1;
-                bool foundBetterWaypoint = false;
-                
-                // Look ahead for a waypoint closer to our height
-                while (searchIndex < path.Count && searchIndex < targetWaypointIndex + 10)
-                {
-                    float testHeightDiff = Mathf.Abs(path[searchIndex].y - transform.position.y);
-                    if (testHeightDiff < heightDiff)
-                    {
-                        targetWaypointIndex = searchIndex;
-                        foundBetterWaypoint = true;
-                        break;
-                    }
-                    searchIndex++;
-                }
-                
-                if (!foundBetterWaypoint)
-                {
-                    // Skip ahead in the path
-                    int skipAmount = Mathf.Min(3, path.Count - targetWaypointIndex);
-                    targetWaypointIndex += skipAmount;
-                }
-            }
-            else
-            {
-                // Normal stuck on same level - skip ahead
-                int skipAmount = Mathf.Min(5, path.Count - targetWaypointIndex);
-                targetWaypointIndex += skipAmount;
-            }
-        }
+        // Skip ahead in the path to get past the stuck point
+        int skipAmount = Mathf.Min(5, playerPath.Count - targetWaypointIndex);
+        targetWaypointIndex += skipAmount;
         
         // If we skipped everything, clear path and go direct to player
-        if (targetWaypointIndex >= path.Count)
+        if (targetWaypointIndex >= playerPath.Count)
         {
-            path.Clear();
+            playerPath.Clear();
             targetWaypointIndex = 0;
-        }
-    }
-    
-    void Move()
-    {
-        Vector3 targetPosition;
-        
-        // Determine where to move
-        if (targetWaypointIndex < path.Count)
-        {
-            targetPosition = path[targetWaypointIndex];
-        }
-        else
-        {
-            targetPosition = player.position;
-        }
-        
-        // Calculate movement direction
-        Vector3 desiredDirection = targetPosition - transform.position;
-        float verticalDifference = Mathf.Abs(desiredDirection.y);
-        desiredDirection.y = 0; // Horizontal direction for obstacle checking
-        
-        float distance = desiredDirection.magnitude;
-        
-        // Only move if not too close
-        if (distance > 1f)
-        {
-            desiredDirection.Normalize();
             
-            Vector3 finalDirection;
-            
-            // If there's significant vertical difference (stairs/ramps), trust the waypoint path
-            // Don't try to avoid obstacles - we need to go up/down
-            if (verticalDifference > 0.5f && targetWaypointIndex < path.Count)
+            // Try going directly to player
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(player.position, out hit, navMeshSampleDistance, NavMesh.AllAreas))
             {
-                // Move directly toward waypoint, including vertical component
-                finalDirection = (targetPosition - transform.position).normalized;
-                finalDirection.y = 0; // Still keep horizontal for rotation, but trust the controller for vertical
-                
-                // Move with original direction toward the waypoint
-                Vector3 move = (targetPosition - transform.position);
-                move.y = 0; // Let gravity handle Y
-                move = move.normalized * moveSpeed * Time.deltaTime;
-                controller.Move(move);
-            }
-            else
-            {
-                // On flat ground, use obstacle avoidance
-                finalDirection = GetAvoidanceDirection(desiredDirection);
-                
-                // Move the character
-                Vector3 move = finalDirection * moveSpeed * Time.deltaTime;
-                controller.Move(move);
-            }
-            
-            // Rotate toward movement direction
-            if (finalDirection != Vector3.zero)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(finalDirection);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                navAgent.SetDestination(hit.position);
             }
         }
-    }
-    
-    Vector3 GetAvoidanceDirection(Vector3 desiredDirection)
-    {
-        // Check if the desired direction is blocked
-        Vector3 rayOrigin = transform.position + Vector3.up * (controller.height * 0.5f);
-        
-        // If desired path is clear, use it
-        if (!Physics.Raycast(rayOrigin, desiredDirection, obstacleCheckDistance, obstacleLayer))
-        {
-            return desiredDirection;
-        }
-        
-        // Desired path is blocked, find best alternative
-        float bestDot = -1f;
-        Vector3 bestDirection = desiredDirection;
-        bool foundClear = false;
-        
-        // Check multiple directions in an arc
-        for (int i = 0; i < avoidanceRayCount; i++)
-        {
-            float angle = -90f + (180f / (avoidanceRayCount - 1)) * i;
-            Vector3 testDirection = Quaternion.Euler(0, angle, 0) * desiredDirection;
-            
-            // Check if this direction is clear
-            if (!Physics.Raycast(rayOrigin, testDirection, sideCheckDistance, obstacleLayer))
-            {
-                // How aligned is this with our desired direction?
-                float dot = Vector3.Dot(testDirection, desiredDirection);
-                
-                if (dot > bestDot)
-                {
-                    bestDot = dot;
-                    bestDirection = testDirection;
-                    foundClear = true;
-                }
-            }
-        }
-        
-        // If we found a clear path, use it
-        if (foundClear)
-        {
-            return bestDirection;
-        }
-        
-        // All paths blocked, try moving perpendicular to find a way around
-        Vector3 perpendicular = Vector3.Cross(desiredDirection, Vector3.up);
-        
-        // Check both perpendicular directions
-        if (!Physics.Raycast(rayOrigin, perpendicular, sideCheckDistance, obstacleLayer))
-        {
-            return perpendicular;
-        }
-        else if (!Physics.Raycast(rayOrigin, -perpendicular, sideCheckDistance, obstacleLayer))
-        {
-            return -perpendicular;
-        }
-        
-        // Completely stuck, still try to move in desired direction
-        // CharacterController collision will handle the rest
-        return desiredDirection;
-    }
-    
-    void ApplyGravity()
-    {
-        if (controller.isGrounded)
-        {
-            verticalVelocity.y = -2f;
-        }
-        else
-        {
-            verticalVelocity.y += gravity * Time.deltaTime;
-        }
-        
-        controller.Move(verticalVelocity * Time.deltaTime);
     }
 
     void OnDrawGizmos()
     {
-        if (path == null || path.Count == 0) return;
+        if (playerPath == null || playerPath.Count == 0) return;
 
         // Draw path
         Gizmos.color = Color.yellow;
-        for (int i = 0; i < path.Count - 1; i++)
+        for (int i = 0; i < playerPath.Count - 1; i++)
         {
-            Gizmos.DrawLine(path[i], path[i + 1]);
+            Gizmos.DrawLine(playerPath[i], playerPath[i + 1]);
         }
         
         // Draw waypoints
-        for (int i = 0; i < path.Count; i++)
+        for (int i = 0; i < playerPath.Count; i++)
         {
             if (i < targetWaypointIndex)
                 Gizmos.color = new Color(0.5f, 0.5f, 0.5f, 0.5f); // Passed
@@ -337,33 +316,24 @@ public class AICharacterController : MonoBehaviour
             else
                 Gizmos.color = Color.cyan; // Future
                 
-            Gizmos.DrawSphere(path[i], 0.2f);
+            Gizmos.DrawSphere(playerPath[i], 0.2f);
         }
         
         // Draw current target line
-        if (targetWaypointIndex < path.Count)
+        if (targetWaypointIndex < playerPath.Count)
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawLine(transform.position, path[targetWaypointIndex]);
+            Gizmos.DrawLine(transform.position, playerPath[targetWaypointIndex]);
         }
         
-        // Draw obstacle detection rays
-        if (controller != null && Application.isPlaying)
+        // Draw NavMesh path
+        if (navAgent != null && navAgent.hasPath)
         {
-            Vector3 rayOrigin = transform.position + Vector3.up * (controller.height * 0.5f);
-            Vector3 forward = transform.forward;
-            
-            // Main forward ray
-            Gizmos.color = Color.red;
-            Gizmos.DrawRay(rayOrigin, forward * obstacleCheckDistance);
-            
-            // Side rays
-            Gizmos.color = Color.yellow;
-            for (int i = 0; i < avoidanceRayCount; i++)
+            Gizmos.color = Color.blue;
+            Vector3[] corners = navAgent.path.corners;
+            for (int i = 0; i < corners.Length - 1; i++)
             {
-                float angle = -90f + (180f / (avoidanceRayCount - 1)) * i;
-                Vector3 testDirection = Quaternion.Euler(0, angle, 0) * forward;
-                Gizmos.DrawRay(rayOrigin, testDirection * sideCheckDistance);
+                Gizmos.DrawLine(corners[i], corners[i + 1]);
             }
         }
     }

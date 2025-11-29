@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 using UnityEngine.Video;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Loads all video frames before playing the timeline
@@ -12,19 +13,32 @@ public class PlayTimelineAfterLoad : MonoBehaviour
 {
     [SerializeField] private PlayableDirector playableDirector;
     [SerializeField] private bool showLoadingProgress = true;
-    
-#if UNITY_EDITOR
-    [SerializeField] private double startTime = 0.0;
-#endif
+    private double startTime = 0.0;
     
     private int totalFramesToLoad = 0;
     private int framesLoaded = 0;
     private bool isLoading = false;
 
+    [ContextMenu("Clear Checkpoint")]
+    private void ClearCheckpoint()
+    {
+        PlayerPrefs.DeleteKey("startFight");
+        PlayerPrefs.Save();
+        Debug.Log("[PlayTimelineAfterLoad] Checkpoint cleared!");
+    }
+
     private void Start()
     {
+        // Check for checkpoint
+        if (PlayerPrefs.GetInt("startFight", 0) == 1)
+        {
+            startTime = 173.0;
+        }
+        
         if (playableDirector != null)
         {
+            // Subscribe to the stopped event
+            playableDirector.stopped += OnTimelineStopped;
             StartCoroutine(LoadFramesAndPlay());
         }
     }
@@ -80,9 +94,7 @@ public class PlayTimelineAfterLoad : MonoBehaviour
         DisableAllVideoPlayers();
 
         // Start timeline playback
-#if UNITY_EDITOR
         playableDirector.time = startTime;
-#endif
         playableDirector.Play();
         isLoading = false;
     }
@@ -177,8 +189,25 @@ public class PlayTimelineAfterLoad : MonoBehaviour
         }
     }
 
+    private void OnTimelineStopped(PlayableDirector director)
+    {
+        // Check if the "finished" PlayerPref is set
+        if (!PlayerPrefs.HasKey("finished"))
+        {
+            // PlayerPref is not set, reload the current scene
+            Debug.Log("[PlayTimelineAfterLoad] Timeline stopped and 'finished' PlayerPref is not set. Reloading scene.");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+
     private void OnDestroy()
     {
+        // Unsubscribe from the stopped event
+        if (playableDirector != null)
+        {
+            playableDirector.stopped -= OnTimelineStopped;
+        }
+        
         // Optional: Clear cache when this object is destroyed
         // VideoFrameCache.ClearCache();
     }
