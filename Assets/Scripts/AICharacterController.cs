@@ -13,11 +13,13 @@ public class AICharacterController : MonoBehaviour
     [SerializeField] private GameObject failedToPressButton;
     [SerializeField] private GameObject failedToPressButtonDeactivate;
     [SerializeField] private PossessableFirstPersonController playerController;
+    [SerializeField] private Transform attackOriginPoint;
     
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 3.5f;
     [SerializeField] private float attackDistance = 2f;
     [SerializeField] private float attackStopDistance = 0.5f;
+    [SerializeField] private float attackVerticalThreshold = 0.3f;
     
     [Header("Path Tracking")]
     [SerializeField] private float recordInterval = 0.25f;
@@ -72,11 +74,18 @@ public class AICharacterController : MonoBehaviour
     {
         if (player == null || navAgent == null) return;
         
-        // Check if close enough to attack
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        // Use attack origin point if assigned, otherwise use AI's position
+        Vector3 attackPosition = attackOriginPoint != null ? attackOriginPoint.position : transform.position;
         
-        if (distanceToPlayer <= attackDistance && !hasAttacked)
+        // Check if close enough to attack
+        float distanceToPlayer = Vector3.Distance(attackPosition, player.position);
+        float verticalDistance = Mathf.Abs(attackPosition.y - player.position.y);
+        
+        //Debug.Log($"AI Distance Check - Horizontal: {distanceToPlayer:F2} (max: {attackDistance}), Vertical: {verticalDistance:F2} (max: {attackVerticalThreshold}), HasAttacked: {hasAttacked}");
+        
+        if (distanceToPlayer <= attackDistance && verticalDistance <= attackVerticalThreshold && !hasAttacked)
         {
+            //Debug.Log("ATTACK TRIGGERED!");
             TriggerAttack();
         }
         

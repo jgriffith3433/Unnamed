@@ -1,0 +1,11 @@
+{
+    "asset": "b2a1536b31650414599d0f275960e813",
+    "fileName": "019ad185-6d4a-7ea6-8329-e84fb474617e.pose.json",
+    "prompt": "silly stomp left and stomp right",
+    "negativePrompt": "",
+    "model": "9e46c009-67d8-4254-a3a0-32e3168247ee",
+    "modelName": "Text to Motion",
+    "customSeed": 1322227600,
+    "w3CTraceId": "6a562882ac87bf9ffb401c37f5941616",
+    "isTrimmed": false
+}

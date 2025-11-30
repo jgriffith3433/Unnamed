@@ -1,0 +1,11 @@
+{
+    "asset": "b2a1536b31650414599d0f275960e813",
+    "fileName": "019ad187-dd15-71e0-a6c9-046f4cf3009e.pose.json",
+    "prompt": "silly stomp-left stomp-right Big steps. Obvious movement. Slightly scary.",
+    "negativePrompt": "",
+    "model": "9e46c009-67d8-4254-a3a0-32e3168247ee",
+    "modelName": "Text to Motion",
+    "customSeed": 859655260,
+    "w3CTraceId": "fb4c6247b8d2d2e6dda4e861fc81ebfb",
+    "isTrimmed": false
+}

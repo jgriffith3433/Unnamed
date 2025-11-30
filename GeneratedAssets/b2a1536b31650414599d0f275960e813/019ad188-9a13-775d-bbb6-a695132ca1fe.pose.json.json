@@ -1,0 +1,11 @@
+{
+    "asset": "b2a1536b31650414599d0f275960e813",
+    "fileName": "019ad188-9a13-775d-bbb6-a695132ca1fe.pose.json",
+    "prompt": "sumo wrestler",
+    "negativePrompt": "",
+    "model": "9e46c009-67d8-4254-a3a0-32e3168247ee",
+    "modelName": "Text to Motion",
+    "customSeed": 253135031,
+    "w3CTraceId": "4d005663892f513781cb2acd5a50b5ed",
+    "isTrimmed": false
+}

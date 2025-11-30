@@ -58,7 +58,10 @@ public class PossessableFirstPersonController : MonoBehaviour, IPossessable
     public float BottomClamp = -30.0f;
 
     [Tooltip("Camera sensitivity")]
-    public float CameraSensitivity = 0.1f;
+    public float CameraSensitivity = 1.0f;
+
+    [Tooltip("Camera rotation smoothing (lower = smoother, 0 = no smoothing)")]
+    public float CameraSmoothing = 0.1f;
 
     // References
     private Player _player;
@@ -76,6 +79,8 @@ public class PossessableFirstPersonController : MonoBehaviour, IPossessable
     // Camera
     private float _cinemachineTargetYaw;
     private float _cinemachineTargetPitch;
+    private float _targetYaw;
+    private float _targetPitch;
 
     private void Awake()
     {
@@ -116,6 +121,8 @@ public class PossessableFirstPersonController : MonoBehaviour, IPossessable
 
             _cinemachineTargetYaw = cameraTarget.rotation.eulerAngles.y;
             _cinemachineTargetPitch = cameraTarget.rotation.eulerAngles.x;
+            _targetYaw = _cinemachineTargetYaw;
+            _targetPitch = _cinemachineTargetPitch;
         }
 
         // Reset timeouts
@@ -169,14 +176,30 @@ public class PossessableFirstPersonController : MonoBehaviour, IPossessable
 
         Vector2 lookInput = input.lookInput;
 
+        // Apply input directly - Input System already provides delta values
         if (lookInput.sqrMagnitude >= 0.01f)
         {
-            _cinemachineTargetYaw += lookInput.x * CameraSensitivity;
-            _cinemachineTargetPitch -= lookInput.y * CameraSensitivity; // Inverted for natural look up/down
+            _targetYaw += lookInput.x * CameraSensitivity;
+            _targetPitch -= lookInput.y * CameraSensitivity; // Inverted for natural look up/down
         }
 
-        _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
-        _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
+        // Normalize yaw to prevent overflow (360 degree wrapping)
+        _targetYaw = NormalizeAngle(_targetYaw);
+        
+        // Clamp pitch to prevent looking too far up/down
+        _targetPitch = Mathf.Clamp(_targetPitch, BottomClamp, TopClamp);
+
+        // Smooth interpolation for buttery-smooth camera movement
+        if (CameraSmoothing > 0)
+        {
+            _cinemachineTargetYaw = Mathf.LerpAngle(_cinemachineTargetYaw, _targetYaw, 1f - Mathf.Exp(-CameraSmoothing * 100f * Time.deltaTime));
+            _cinemachineTargetPitch = Mathf.Lerp(_cinemachineTargetPitch, _targetPitch, 1f - Mathf.Exp(-CameraSmoothing * 100f * Time.deltaTime));
+        }
+        else
+        {
+            _cinemachineTargetYaw = _targetYaw;
+            _cinemachineTargetPitch = _targetPitch;
+        }
 
         // Apply rotation to camera target
         cameraTarget.rotation = Quaternion.Euler(_cinemachineTargetPitch, _cinemachineTargetYaw, 0.0f);
@@ -268,6 +291,13 @@ public class PossessableFirstPersonController : MonoBehaviour, IPossessable
             float gravityToApply = _verticalVelocity < 0 ? Gravity * FallGravityMultiplier : Gravity;
             _verticalVelocity += gravityToApply * Time.deltaTime;
         }
+    }
+
+    private static float NormalizeAngle(float angle)
+    {
+        while (angle > 360f) angle -= 360f;
+        while (angle < 0f) angle += 360f;
+        return angle;
     }
 
     private static float ClampAngle(float lfAngle, float lfMin, float lfMax)

@@ -5,6 +5,7 @@ using UnityEngine.Playables;
 using UnityEngine.Timeline;
 using UnityEngine.Video;
 using UnityEngine.SceneManagement;
+using Gaia;
 
 /// <summary>
 /// Loads all video frames before playing the timeline
@@ -58,45 +59,126 @@ public class PlayTimelineAfterLoad : MonoBehaviour
         if (videoAssets.Count == 0)
         {
             Debug.LogWarning("[PlayTimelineAfterLoad] No VideoPlayableAssets found in timeline.");
-            playableDirector.Play();
-            isLoading = false;
-            yield break;
         }
-
-        // Calculate total frames to load
-        totalFramesToLoad = 0;
-        foreach (var asset in videoAssets)
+        else
         {
-            if (asset.preloadedFrames != null)
+            // Calculate total frames to load
+            totalFramesToLoad = 0;
+            foreach (var asset in videoAssets)
             {
-                totalFramesToLoad += asset.preloadedFrames.Length;
+                if (asset.preloadedFrames != null)
+                {
+                    totalFramesToLoad += asset.preloadedFrames.Length;
+                }
             }
+
+            if (showLoadingProgress)
+            {
+                Debug.Log($"[PlayTimelineAfterLoad] Loading {totalFramesToLoad} frames from {videoAssets.Count} video(s)...");
+            }
+
+            // Load frames into cache
+            framesLoaded = 0;
+            foreach (var asset in videoAssets)
+            {
+                yield return StartCoroutine(LoadAssetFrames(asset));
+            }
+
+            if (showLoadingProgress)
+            {
+                Debug.Log($"[PlayTimelineAfterLoad] Finished loading {framesLoaded} frames.");
+            }
+
+            // Disable all VideoPlayer components (keep for frame extraction fallback)
+            DisableAllVideoPlayers();
         }
 
-        if (showLoadingProgress)
-        {
-            Debug.Log($"[PlayTimelineAfterLoad] Loading {totalFramesToLoad} frames from {videoAssets.Count} video(s)...");
-        }
+        // Wait for all terrains to load
+        Debug.Log("[PlayTimelineAfterLoad] Waiting for terrain loading to complete...");
+        yield return StartCoroutine(WaitForTerrainsToLoad());
+        Debug.Log("[PlayTimelineAfterLoad] All terrains loaded. Starting timeline playback.");
 
-        // Load frames into cache
-        framesLoaded = 0;
-        foreach (var asset in videoAssets)
-        {
-            yield return StartCoroutine(LoadAssetFrames(asset));
-        }
-
-        if (showLoadingProgress)
-        {
-            Debug.Log($"[PlayTimelineAfterLoad] Finished loading {framesLoaded} frames. Starting timeline playback.");
-        }
-
-        // Disable all VideoPlayer components (keep for frame extraction fallback)
-        DisableAllVideoPlayers();
-
+        // Lock and hide cursor
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        
         // Start timeline playback
         playableDirector.time = startTime;
         playableDirector.Play();
         isLoading = false;
+    }
+
+    private IEnumerator WaitForTerrainsToLoad()
+    {
+        TerrainLoaderManager loaderManager = TerrainLoaderManager.Instance;
+        if (loaderManager == null || loaderManager.TerrainSceneStorage == null)
+        {
+            Debug.LogWarning("[PlayTimelineAfterLoad] TerrainLoaderManager not found, skipping terrain load wait.");
+            yield break;
+        }
+
+        // Force all terrains to load by requesting them from all loaders
+        TerrainLoader[] allLoaders = FindObjectsOfType<TerrainLoader>(true);
+        Debug.Log($"[PlayTimelineAfterLoad] Found {allLoaders.Length} TerrainLoader components");
+        
+        foreach (TerrainLoader loader in allLoaders)
+        {
+            if (loader.enabled && loader.gameObject.activeInHierarchy)
+            {
+                loader.UpdateTerrains();
+            }
+        }
+
+        // Wait until all terrains are loaded
+        int maxWaitFrames = 600; // 10 seconds at 60fps
+        int frameCount = 0;
+        
+        while (frameCount < maxWaitFrames)
+        {
+            bool allLoaded = true;
+            int loadedCount = 0;
+            int totalCount = 0;
+
+            foreach (var terrainScene in loaderManager.TerrainSceneStorage.m_terrainScenes)
+            {
+                totalCount++;
+                
+                // Check if this terrain has any references (meaning something requested it)
+                bool hasReferences = terrainScene.RegularReferences.Count > 0 || terrainScene.ImpostorReferences.Count > 0;
+                
+                if (hasReferences)
+                {
+                    // If it has references, check if it's loaded
+                    if (terrainScene.m_regularLoadState == LoadState.Loaded || terrainScene.m_impostorLoadState == LoadState.Loaded)
+                    {
+                        loadedCount++;
+                    }
+                    else
+                    {
+                        allLoaded = false;
+                    }
+                }
+            }
+
+            if (frameCount % 30 == 0) // Log every half second
+            {
+                Debug.Log($"[PlayTimelineAfterLoad] Terrain loading progress: {loadedCount} terrains loaded");
+            }
+
+            if (allLoaded && loadedCount > 0)
+            {
+                Debug.Log($"[PlayTimelineAfterLoad] All {loadedCount} referenced terrains are loaded!");
+                break;
+            }
+
+            frameCount++;
+            yield return null;
+        }
+
+        if (frameCount >= maxWaitFrames)
+        {
+            Debug.LogWarning("[PlayTimelineAfterLoad] Timeout waiting for terrains to load. Proceeding anyway.");
+        }
     }
 
     private IEnumerator LoadAssetFrames(VideoPlayableAsset asset)
@@ -191,6 +273,10 @@ public class PlayTimelineAfterLoad : MonoBehaviour
 
     private void OnTimelineStopped(PlayableDirector director)
     {
+        // Unlock and show cursor
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        
         // Check if the "finished" PlayerPref is set
         if (!PlayerPrefs.HasKey("finished"))
         {

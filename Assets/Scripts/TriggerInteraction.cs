@@ -103,7 +103,7 @@ public class TriggerInteraction : MonoBehaviour
                 }
             }
         }
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Application.Quit();
     }
 
     // Optional: Context menu for testing

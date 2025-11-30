@@ -1,0 +1,11 @@
+{
+    "asset": "b2a1536b31650414599d0f275960e813",
+    "fileName": "019ad186-89eb-734b-a5f0-cd944f6c18e6.pose.json",
+    "prompt": "A character performs an exaggerated, silly stomp-left stomp-right dance. The movements are over-the-top and cartoonish, with big arm swings and heavy foot impacts. The character tries to be scary while doing it — wide eyes, sudden sharp poses, dramatic pauses, and playful horror-movie energy. They stomp left, stomp right, lean forward menacingly, then repeat with more intensity. Keep the pacing rhythmic, lively, and humorous, mixing creepy tension with goofy timing.",
+    "negativePrompt": "",
+    "model": "9e46c009-67d8-4254-a3a0-32e3168247ee",
+    "modelName": "Text to Motion",
+    "customSeed": 1356401183,
+    "w3CTraceId": "a688c096f5644faeb26a5c9d6e08488e",
+    "isTrimmed": false
+}

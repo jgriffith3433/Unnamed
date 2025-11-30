@@ -1,0 +1,11 @@
+{
+    "asset": "b2a1536b31650414599d0f275960e813",
+    "fileName": "019ad18b-ad76-7b10-a53d-b197aeb53a8b.pose.json",
+    "prompt": "big heavy steps",
+    "negativePrompt": "",
+    "model": "9e46c009-67d8-4254-a3a0-32e3168247ee",
+    "modelName": "Text to Motion",
+    "customSeed": 1690179698,
+    "w3CTraceId": "9ec7a4f9b73f81052ead8ce5baa43ea2",
+    "isTrimmed": false
+}
