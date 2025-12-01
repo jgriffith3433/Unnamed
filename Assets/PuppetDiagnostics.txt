@@ -1,0 +1,55 @@
+====== PUPPETMASTER DIAGNOSTICS ======
+Time: 11/30/2025 10:21:43 AM
+Puppet Object: Dummy PuppetMaster
+
+=== PUPPETMASTER COMPONENT ===
+✓ PuppetMaster found
+  State: Alive
+  Active: True
+  Mode: Active
+  Muscle Weight: 1
+  Pin Weight: 1
+  Mapping Weight: 1
+  Muscle Spring: 250
+  Muscle Damper: 15
+  Update Mode: Normal
+
+=== BEHAVIOUR PUPPET ===
+✓ BehaviourPuppet found
+  Enabled: True
+  Collision Threshold: 8
+  Collision Resistance: RootMotion.Dynamics.Weight
+  Get Up Delay: 1
+  Min Get Up Duration: 1.5
+  Ground Layers: Default(0)
+
+=== BEHAVIOUR FALL ===
+✓ BehaviourFall found
+  Enabled: False
+
+=== ANIMATOR ===
+❌ No Animator component found!
+
+=== PHYSICS SETTINGS ===
+  Fixed Timestep: 0.01999999
+  Gravity: (0.00, -0.81, 0.00)
+  Default Solver Iterations: 6
+  Default Solver Velocity Iterations: 1
+
+=== LAYER SETUP ===
+  Puppet Layer: Characters (13)
+  ❌ CRITICAL: No ground detected below puppet!
+
+=== GROUND DETECTION TEST ===
+  Ground detection hits: 0/5 test points
+  ❌ CRITICAL: Cannot detect ground with current layer mask!
+
+=== MUSCLES ===
+  Total Muscles: 13
+
+=== COLLIDERS ===
+  Total Colliders: 13
+  Trigger Colliders: 0
+  Physical Colliders: 13
+
+====== END DIAGNOSTICS ======
