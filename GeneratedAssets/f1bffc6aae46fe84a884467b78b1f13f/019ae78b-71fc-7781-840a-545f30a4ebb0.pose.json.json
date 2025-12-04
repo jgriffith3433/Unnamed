@@ -1,0 +1,11 @@
+{
+    "asset": "f1bffc6aae46fe84a884467b78b1f13f",
+    "fileName": "019ae78b-71fc-7781-840a-545f30a4ebb0.pose.json",
+    "prompt": "singing in microphone",
+    "negativePrompt": "",
+    "model": "9e46c009-67d8-4254-a3a0-32e3168247ee",
+    "modelName": "Text to Motion",
+    "customSeed": 324942819,
+    "w3CTraceId": "51ebf0c294744b7481e00f1d8cd9793e",
+    "isTrimmed": false
+}

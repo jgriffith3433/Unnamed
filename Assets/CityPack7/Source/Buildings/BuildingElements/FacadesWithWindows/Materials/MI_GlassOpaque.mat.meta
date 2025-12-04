@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d9561bab4ab49e04d98d0054128ca3c0
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 303725
+  packageName: Modern City/Block 7. (URP)
+  packageVersion: 1.0
+  assetPath: Assets/CityPack7/Source/Buildings/BuildingElements/FacadesWithWindows/Materials/MI_GlassOpaque.mat
+  uploadId: 712387

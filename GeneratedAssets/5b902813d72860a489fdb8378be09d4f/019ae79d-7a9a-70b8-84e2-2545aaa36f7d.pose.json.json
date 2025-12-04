@@ -1,0 +1,11 @@
+{
+    "asset": "f1bffc6aae46fe84a884467b78b1f13f",
+    "fileName": "019ae79d-7a9a-70b8-84e2-2545aaa36f7d.pose.json",
+    "prompt": "rock concert",
+    "negativePrompt": "",
+    "model": "9e46c009-67d8-4254-a3a0-32e3168247ee",
+    "modelName": "Text to Motion",
+    "customSeed": 1472868406,
+    "w3CTraceId": "0a959fe75ed0a9e385ebc869ca42635f",
+    "isTrimmed": false
+}

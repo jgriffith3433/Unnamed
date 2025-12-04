@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 6114f48c448821c409b5148dff8ec8c0
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 303725
+  packageName: Modern City/Block 7. (URP)
+  packageVersion: 1.0
+  assetPath: Assets/CityPack7/Source/Buildings/GasStation/Materials/MI_Glass_Panels.mat
+  uploadId: 712387

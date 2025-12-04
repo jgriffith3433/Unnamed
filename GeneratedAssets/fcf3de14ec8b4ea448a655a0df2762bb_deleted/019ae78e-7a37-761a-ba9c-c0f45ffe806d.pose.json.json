@@ -1,0 +1,11 @@
+{
+    "asset": "f1bffc6aae46fe84a884467b78b1f13f",
+    "fileName": "019ae78e-7a37-761a-ba9c-c0f45ffe806d.pose.json",
+    "prompt": "swaying",
+    "negativePrompt": "",
+    "model": "9e46c009-67d8-4254-a3a0-32e3168247ee",
+    "modelName": "Text to Motion",
+    "customSeed": 1286453020,
+    "w3CTraceId": "dab8602abd58db89686ae69ac2b484e2",
+    "isTrimmed": false
+}

@@ -5,24 +5,44 @@ using Gaia;
 /// Controls the Gaia time of day system via a single float value.
 /// This component can be animated with Unity Timeline to smoothly change the time of day.
 /// </summary>
+[ExecuteAlways]
 public class TimeOfDayController : MonoBehaviour
 {
     [SerializeField, Range(0f, 24f), Tooltip("Time of day in hours (0-24). Can be animated with Timeline.")]
     private float timeOfDay = 12f;
 
+    [SerializeField]
+    private bool executeInEditMode = true;
+
     private float previousTimeOfDay;
 
     private void Start()
     {
+        if (!Application.isPlaying && !executeInEditMode)
+        {
+            return;
+        }
+
         // Initialize previous time to current time
         previousTimeOfDay = timeOfDay;
-        
+    }
+
+    private void OnEnable()
+    {
+        if (!Application.isPlaying && !executeInEditMode)
+        {
+            return;
+        }
         // Set initial time
         UpdateTimeOfDay();
     }
 
     private void Update()
     {
+        if (!Application.isPlaying && !executeInEditMode)
+        {
+            return;
+        }
         // Check if the time has changed (useful for Timeline animations)
         if (!Mathf.Approximately(previousTimeOfDay, timeOfDay))
         {
