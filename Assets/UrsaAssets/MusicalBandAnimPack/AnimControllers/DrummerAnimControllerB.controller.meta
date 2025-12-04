@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5a7b618c113acac49ae32b28d6df46b4
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 334706
+  packageName: Musical Motions
+  packageVersion: 1.0
+  assetPath: Assets/UrsaAssets/MusicalBandAnimPack/AnimControllers/DrummerAnimControllerB.controller
+  uploadId: 792198

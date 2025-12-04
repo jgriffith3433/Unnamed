@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 680ed246f15722c4cad8eecc6a611e82
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 334706
+  packageName: Musical Motions
+  packageVersion: 1.0
+  assetPath: Assets/UrsaAssets/MusicalBandAnimPack/AnimControllers/SaxAnimController.controller
+  uploadId: 792198

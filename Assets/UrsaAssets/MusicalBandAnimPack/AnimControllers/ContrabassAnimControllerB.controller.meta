@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 26af1a9084f87b84686ffd227a9824b1
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 334706
+  packageName: Musical Motions
+  packageVersion: 1.0
+  assetPath: Assets/UrsaAssets/MusicalBandAnimPack/AnimControllers/ContrabassAnimControllerB.controller
+  uploadId: 792198

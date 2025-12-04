@@ -1,0 +1,11 @@
+{
+    "asset": "a8c85ec5d9f91b8488b0fa00139ac28e",
+    "fileName": "019addef-3f4c-7d42-94ef-8ef3997f6476.pose.json",
+    "prompt": "jump scare",
+    "negativePrompt": "",
+    "model": "9e46c009-67d8-4254-a3a0-32e3168247ee",
+    "modelName": "Text to Motion",
+    "customSeed": 1490129484,
+    "w3CTraceId": "292a7d4eefd8d5ee15c2b0f837d9ff84",
+    "isTrimmed": false
+}

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e5361fd1653e065438e28c179b63c90f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 334706
+  packageName: Musical Motions
+  packageVersion: 1.0
+  assetPath: Assets/UrsaAssets/MusicalBandAnimPack/AnimControllers/GuitaristAnimController.controller
+  uploadId: 792198

@@ -1,0 +1,11 @@
+{
+    "asset": "a8c85ec5d9f91b8488b0fa00139ac28e",
+    "fileName": "019addfc-784b-719d-b9a2-5e74391611b3.pose.json",
+    "prompt": "breakdance",
+    "negativePrompt": "",
+    "model": "9e46c009-67d8-4254-a3a0-32e3168247ee",
+    "modelName": "Text to Motion",
+    "customSeed": 202732404,
+    "w3CTraceId": "5ad1fa97494d3628cf3a7d5342683423",
+    "isTrimmed": false
+}

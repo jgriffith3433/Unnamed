@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c985f5a0ebf0eaa46919b32e165d2130
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 334706
+  packageName: Musical Motions
+  packageVersion: 1.0
+  assetPath: Assets/UrsaAssets/MusicalBandAnimPack/AnimControllers/ViolinAnimatorController.controller
+  uploadId: 792198

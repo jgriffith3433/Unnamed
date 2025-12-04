@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: abf9b499029536c4b9749f6ae8138ffe
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 334706
+  packageName: Musical Motions
+  packageVersion: 1.0
+  assetPath: Assets/UrsaAssets/MusicalBandAnimPack/AnimControllers/DrumSetAnimControllerA.controller
+  uploadId: 792198
